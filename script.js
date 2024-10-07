@@ -4,16 +4,11 @@ function loadCheckboxState() {
     const tableCheckboxState = localStorage.getItem('tableCheckbox');
     const titleDeleteCheckboxState = localStorage.getItem('titleDeleteCheckbox');
 
-    // Устанавливаем состояние чекбоксов
-    if (mainCheckboxState === 'true') {
-        document.getElementById('mainCheckbox').checked = true;
-    }
-    if (tableCheckboxState === 'true') {
-        document.getElementById('tableCheckbox').checked = true;
-    }
-    if (titleDeleteCheckboxState === 'true') {
-        document.getElementById('titleDeleteCheckbox').checked = true;
-    }
+     // Устанавливаем состояние чекбоксов
+    document.getElementById('mainCheckbox').checked = (mainCheckboxState === 'true');
+    document.getElementById('tableCheckbox').checked = (tableCheckboxState === 'true');
+    document.getElementById('titleDeleteCheckbox').checked = (titleDeleteCheckboxState === 'true');
+
 }
 
 // Функция для сохранения состояния чекбоксов
@@ -36,8 +31,8 @@ window.addEventListener('DOMContentLoaded', loadCheckboxState);
 /* ======================================================================================================== */
 document.getElementById('transformButton').addEventListener('click', function() {
     let inputText = document.getElementById('inputText').value;
-
-    // Проверяем, включен ли чекбокс для добавления </div> в конец текста
+  
+    // Проверяем, включены ли чекбоксы
     if (document.getElementById("mainCheckbox").checked) {
 		inputText = inputText.replace(/^/, '<div class="main-block"><p></p>').replace(/$/, '</div>');
 	}
@@ -45,10 +40,10 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		inputText = inputText.replace(/<table[^>]*>/gi, '<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
         inputText = inputText.replace(/<\/table[^>]*>/gi, '</tbody>\n</table>\n</div>\n');
 	}
-    if (document.getElementById("titleDeleteCheckbox").checked) {
-		inputText = inputText.replace(/<div class="example-title">Пример<\/div>/gi, '');
-
-	}
+    if (document.getElementById("brCheckbox").checked) {
+        inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
+	} 
+    
 
 
 
@@ -115,13 +110,18 @@ document.getElementById('transformButton').addEventListener('click', function() 
     );
 
     // Условие 2: $case
-    inputText = processBlocks(
-        /<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<p>\s*\$case\s*\s*<\/p>/,
-        /<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
-        `<div class="block-example">
-            <div class="example-title">Пример</div>`,
-        `</div>`
+inputText = processBlocks(
+/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<p>\s*\$case\s*\s*<\/p>/,
+/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
+`<div class="block-example">
+<div class="example-title">Пример</div>`,
+`</div>`
     );
+
+    if (document.getElementById("titleDeleteCheckbox").checked) {
+        console.log(inputText);
+    inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,'');
+}
 
     // Условие 3: $biblio
     inputText = processBlocks(
@@ -172,7 +172,7 @@ document.getElementById('transformButton').addEventListener('click', function() 
     // 6. Добавить target="_blank" ко всем <a>
     inputText = inputText.replace(/<a(?![^>]*target=["']_blank["'])/g, '<a target="_blank"');
 
-    inputText = inputText.replace(/<\/(ul|ol)>/g, '</$1><br/>');
+    
 
     //7. Замена любого <code> на чистый <code>
     inputText = inputText.replace(/<code\b[^>]*>/gi, '<code>');
