@@ -1,52 +1,31 @@
 // Функция для загрузки состояния чекбоксов
 function loadCheckboxState() {
-    const mainCheckboxState = localStorage.getItem('mainCheckbox');
-    const tableCheckboxState = localStorage.getItem('tableCheckbox');
-    const titleDeleteCheckboxState = localStorage.getItem('titleDeleteCheckbox');
-
-     // Устанавливаем состояние чекбоксов
-    document.getElementById('mainCheckbox').checked = (mainCheckboxState === 'true');
-    document.getElementById('tableCheckbox').checked = (tableCheckboxState === 'true');
-    document.getElementById('titleDeleteCheckbox').checked = (titleDeleteCheckboxState === 'true');
-
+    document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
+        const state = localStorage.getItem(checkbox.dataset.checkbox);
+        checkbox.checked = (state === 'true');
+    });
 }
 
 // Функция для сохранения состояния чекбоксов
 function saveCheckboxState() {
-    localStorage.setItem('mainCheckbox', document.getElementById('mainCheckbox').checked);
-    localStorage.setItem('tableCheckbox', document.getElementById('tableCheckbox').checked);
-    localStorage.setItem('titleDeleteCheckbox', document.getElementById('titleDeleteCheckbox').checked);
+    document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
+        localStorage.setItem(checkbox.dataset.checkbox, checkbox.checked);
+    });
 }
 
 // Добавляем обработчики событий для чекбоксов
-document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
     checkbox.addEventListener('change', saveCheckboxState);
 });
 
 // Загружаем состояние чекбоксов при загрузке страницы
 window.addEventListener('DOMContentLoaded', loadCheckboxState);
 
-
-
-/* ======================================================================================================== */
+// Функция для обработки текста с учетом состояния чекбоксов
 document.getElementById('transformButton').addEventListener('click', function() {
     let inputText = document.getElementById('inputText').value;
-  
-    // Проверяем, включены ли чекбоксы
-    if (document.getElementById("mainCheckbox").checked) {
-		inputText = inputText.replace(/^/, '<div class="main-block"><p></p>').replace(/$/, '</div>');
-	}
-    if (document.getElementById("tableCheckbox").checked) {
-		inputText = inputText.replace(/<table[^>]*>/gi, '<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
-        inputText = inputText.replace(/<\/table[^>]*>/gi, '</tbody>\n</table>\n</div>\n');
-	}
-    if (document.getElementById("brCheckbox").checked) {
-        inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
-	} 
+
     
-
-
-
 
 
     // Функция для обработки каждого условия
@@ -118,10 +97,7 @@ inputText = processBlocks(
 `</div>`
     );
 
-    if (document.getElementById("titleDeleteCheckbox").checked) {
-        console.log(inputText);
-    inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,'');
-}
+    
 
     // Условие 3: $biblio
     inputText = processBlocks(
@@ -265,6 +241,27 @@ inputText = processBlocks(
     inputText = inputText.replace(/<figure\s+class="img">\s*<img\s+class="img-bg"\s+src="\/asset-v1:SkillFactory\+MIPTDPM\+SEPT22\+type@asset\+block@star-fill\.svg"\s+width="24"\s+height="24">\s*<\/figure>/g, '');
 
     inputText = inputText.replace(/<div class="glossary">/g, '<div class="color-container blue-container">').replace(/<\/h1>/g, '</div>');
+
+
+    document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
+        if (checkbox.checked) {
+            switch (checkbox.dataset.checkbox) {
+                case 'main':
+                    inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, '\n</div>');
+                    break;
+                case 'table':
+                    inputText = inputText.replace(/<table[^>]*>/gi, '<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
+                    inputText = inputText.replace(/<\/table[^>]*>/gi, '</tbody>\n</table>\n</div>\n');
+                    break;
+                case 'br':
+                    inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
+                    break;
+                case 'deleteDiv':
+                    inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,'');
+                    break;
+            }
+        }
+    });
 
 
     // Вывод результата
