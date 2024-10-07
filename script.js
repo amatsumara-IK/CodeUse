@@ -274,12 +274,14 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		""
 	);
 
-	inputText = inputText
-		.replace(
-			/<div class="glossary">/g,
-			'<div class="color-container blue-container">'
-		)
-		.replace(/<\/h1>/g, "</div>");
+	inputText = inputText.replace(/<div class="glossary">/g,'<div class="color-container blue-container">').replace(/<\/h1>/g, "</div>");
+
+	//Замена IMG краказябры на норм шаблон
+
+	inputText = inputText.replace(/<p>\s*<p><span>>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.png"[^>]*>\s*<\/p>/gs, 
+		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+	
+	
 
 	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
 		if (checkbox.checked) {
