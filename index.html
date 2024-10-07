@@ -3,6 +3,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 
 <!-- https://coolors.co/1c2321-7d98a1-5e6572-a9b4c2-eef1ef  -->
 
@@ -36,34 +38,37 @@
             line-height: 28px !important;
             display: flex;
             justify-content: center;
-            width: min(100%, 1400px);
+            width: min(100%, 1500px);
             margin: 30px auto;
             word-break: break-word;
             background-color: #7D98A1;
-         }
+        }
 
         .container {
             display: flex;
             flex-direction: column;
             gap: 20px;
             flex: 0 0 800px;
-            
+
         }
 
         .options {
-            display: flex;  
+            display: flex;
             flex-direction: column;
-            flex: 0 0  300px;
-            font-family: 'Mont', Arial, sans-serif !important;
-            font-style: normal !important;
-            font-weight: 300 !important;
+            flex: 0 0 350px;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
             font-size: 15px !important;
-            line-height: 28px !important;
+            line-height: 24px !important;
+
+
         }
 
         .options p {
             margin-bottom: 5px;
-        
+
         }
 
         .space {
@@ -104,13 +109,13 @@
         }
 
         button:hover {
-         
+
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 3px 5px rgba(0, 0, 0, 0.19);
             transform: translateY(-1px);
         }
 
         button:active {
-            background-color: #88e87a;
+            background-color: #2f3836;
             transform: scale(0.995);
             transition: all 0.05s ease;
         }
@@ -150,44 +155,48 @@
             }
         }
 
-       
+
 
 
 
         /* Меняем цвет акцента */
         .styled-checkbox {
-          position: relative;
-          top:2px;
-          accent-color: #a9b4c2ff; /* Меняет основной цвет галочки */
-          width: 18px;
-          height: 18px;
-          cursor: pointer;
-          transform: scale(0.9); /* Увеличивает чекбокс */
+            position: relative;
+            top: 2px;
+            accent-color: #a9b4c2ff;
+            /* Меняет основной цвет галочки */
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            transform: scale(0.9);
+            /* Увеличивает чекбокс */
         }
-        
+
         /* Эффект при наведении */
         .styled-checkbox:hover {
-          filter: brightness(0.9); /* Затемняет при наведении */
+            filter: brightness(0.9);
+            /* Затемняет при наведении */
         }
-        
-        
+
+
         /* Стили для состояния "checked" */
         .styled-checkbox:checked {
-          accent-color: #a9b4c2ff; /* Меняет цвет при выборе */
+            accent-color: #a9b4c2ff;
+            /* Меняет цвет при выборе */
         }
-        
-      
-        
     </style>
 </head>
 
 <body>
     <div class="options">
         <p><input type="checkbox" data-checkbox="main" class="styled-checkbox" checked> Обернуть код в main-block</p>
-        <p><input type="checkbox" data-checkbox="table" class="styled-checkbox" checked> Заменить table на шаблонный вид</p>
-        <p><input type="checkbox" data-checkbox="deleteDiv" class="styled-checkbox" checked>Удалить &lt;div
-            class="example-title"&gt;Пример&lt;/div&gt</p>
-        <p><input type="checkbox" data-checkbox="br" class="styled-checkbox" checked> Добавить &lt;br&gt; после &lt;ol&gt; и &lt;ul&gt;</p>
+        <p><input type="checkbox" data-checkbox="table" class="styled-checkbox" checked> Заменить table на шаблонный вид
+        </p>
+        <p><input type="checkbox" data-checkbox="deleteDiv" class="styled-checkbox" checked>Удалить <span
+                style="font-size: 12px;">&lt;div
+                class="example-title"&gt;Пример&lt;/div&gt</span></p>
+        <p><input type="checkbox" data-checkbox="br" class="styled-checkbox" checked> Добавить &lt;br&gt; после
+            &lt;ol&gt; и &lt;ul&gt;</p>
 
 
     </div>

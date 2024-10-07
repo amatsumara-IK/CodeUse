@@ -23,54 +23,67 @@ window.addEventListener('DOMContentLoaded', loadCheckboxState);
 
 // Функция для обработки текста с учетом состояния чекбоксов
 document.getElementById('transformButton').addEventListener('click', function() {
-    let inputText = document.getElementById('inputText').value;
+	let inputText = document.getElementById("inputText").value;
 
-    
+	// Функция для обработки каждого условия
+	function processBlocks(
+		startPattern,
+		endPattern,
+		replacementHtml,
+		closingTag
+	) {
+		let resultText = "";
+		let currentIndex = 0;
 
+		while (true) {
+			const startMatch = inputText
+				.slice(currentIndex)
+				.match(startPattern);
+			if (!startMatch) {
+				// Добавляем оставшийся текст после последнего блока
+				resultText += inputText.slice(currentIndex);
+				break;
+			}
 
-    // Функция для обработки каждого условия
-    function processBlocks(startPattern, endPattern, replacementHtml, closingTag) {
-        let resultText = '';
-        let currentIndex = 0;
+			const start = currentIndex + startMatch.index;
+			resultText += inputText.slice(currentIndex, start); // Добавляем текст перед блоком
 
-        while (true) {
-            const startMatch = inputText.slice(currentIndex).match(startPattern);
-            if (!startMatch) {
-                // Добавляем оставшийся текст после последнего блока
-                resultText += inputText.slice(currentIndex);
-                break;
-            }
+			const afterStartText = inputText.slice(
+				start + startMatch[0].length
+			);
+			const endMatch = afterStartText.match(endPattern);
+			if (!endMatch) {
+				alert(`Не найден блок $end после ${startPattern}`);
+				return;
+			}
 
-            const start = currentIndex + startMatch.index;
-            resultText += inputText.slice(currentIndex, start); // Добавляем текст перед блоком
+			const end =
+				start +
+				startMatch[0].length +
+				endMatch.index +
+				endMatch[0].length;
+			const codeBetween = inputText.slice(
+				start + startMatch[0].length,
+				start + startMatch[0].length + endMatch.index
+			);
 
-            const afterStartText = inputText.slice(start + startMatch[0].length);
-            const endMatch = afterStartText.match(endPattern);
-            if (!endMatch) {
-                alert(`Не найден блок $end после ${startPattern}`);
-                return;
-            }
+			// Вставляем код внутрь replacementHtml и добавляем закрывающий тег
+			const newBlock = replacementHtml + codeBetween + closingTag;
 
-            const end = start + startMatch[0].length + endMatch.index + endMatch[0].length;
-            const codeBetween = inputText.slice(start + startMatch[0].length, start + startMatch[0].length + endMatch.index);
+			resultText += newBlock;
 
-            // Вставляем код внутрь replacementHtml и добавляем закрывающий тег
-            const newBlock = replacementHtml + codeBetween + closingTag;
+			// Обновляем текущий индекс для следующего поиска
+			currentIndex = end;
+		}
 
-            resultText += newBlock;
+		return resultText;
+	}
 
-            // Обновляем текущий индекс для следующего поиска
-            currentIndex = end;
-        }
-
-        return resultText;
-    }
-
-    // Условие 1: $imp
-    inputText = processBlocks(
-        /<p>\s*<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<p>\s*\$imp\s*<\/p>/,
-        /<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
-        `<div class="color-container container-flex blue-container">
+	// Условие 1: $imp
+	inputText = processBlocks(
+		/<p>\s*<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<p>\s*\$imp\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
+		`<div class="color-container container-flex blue-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -85,25 +98,23 @@ document.getElementById('transformButton').addEventListener('click', function() 
                 </svg>
             </div>
             <span>`,
-        `</span></div>`
-    );
+		`</span></div>`
+	);
 
-    // Условие 2: $case
-inputText = processBlocks(
-/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<p>\s*\$case\s*\s*<\/p>/,
-/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
-`<div class="block-example">
+	// Условие 2: $case
+	inputText = processBlocks(
+		/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<p>\s*\$case\s*\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
+		`<div class="block-example">
 <div class="example-title">Пример</div>`,
-`</div>`
-    );
+		`</div>`
+	);
 
-    
-
-    // Условие 3: $biblio
-    inputText = processBlocks(
-        /<p>\s*<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<p>\s*\$biblio\s*<\/p>/,
-        /<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
-        `<div class="color-container container-flex orange-container">
+	// Условие 3: $biblio
+	inputText = processBlocks(
+		/<p>\s*<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<p>\s*\$biblio\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
+		`<div class="color-container container-flex orange-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -117,97 +128,117 @@ inputText = processBlocks(
                 </svg>
             </div>
             <span>`,
-        `</span></div>`
-    );
+		`</span></div>`
+	);
 
-    // Условие 4: $term
-    inputText = processBlocks(
-        /<p>\s*<strong>\s*\s*\$term\s*<\/strong>\s*<\/p>|<p>\s*\$term\s*<\/p>/,
-        /<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
-        `<div class="term">`,
-        `</div>`
-    );
+	// Условие 4: $term
+	inputText = processBlocks(
+		/<p>\s*<strong>\s*\s*\$term\s*<\/strong>\s*<\/p>|<p>\s*\$term\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<p>\s*\$end\s*<\/p>/,
+		`<div class="term">`,
+		`</div>`
+	);
 
-    // Новые условия
-    // 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
-    inputText = inputText.replace(/<h1>/g, '<p></p><div class="h1">').replace(/<\/h1>/g, '</div>');
+	// Новые условия
+	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
+	inputText = inputText
+		.replace(/<h1>/g, '<p></p><div class="h1">')
+		.replace(/<\/h1>/g, "</div>");
 
-    // 2. Заменить <h2> на <p></p><div class="h2"> и </h2> на </div>
-    inputText = inputText.replace(/<h2>/g, '<p></p><div class="h2">').replace(/<\/h2>/g, '</div>');
+	// 2. Заменить <h2> на <p></p><div class="h2"> и </h2> на </div>
+	inputText = inputText
+		.replace(/<h2>/g, '<p></p><div class="h2">')
+		.replace(/<\/h2>/g, "</div>");
 
-    // 3. Заменить <h3> на <p></p><div class="h3"> и </h3> на </div>
-    inputText = inputText.replace(/<h3>/g, '<p></p><div class="h3">').replace(/<\/h3>/g, '</div>');
+	// 3. Заменить <h3> на <p></p><div class="h3"> и </h3> на </div>
+	inputText = inputText
+		.replace(/<h3>/g, '<p></p><div class="h3">')
+		.replace(/<\/h3>/g, "</div>");
 
-    // 4. Заменить <ul> на <ul class="list">
-    inputText = inputText.replace(/<ul>/g, '<ul class="list">');
-    
+	// 4. Заменить <ul> на <ul class="list">
+	inputText = inputText.replace(/<ul>/g, '<ul class="list">');
 
-    // 5. Заменить <ol> на <ol class="ordered-list">
-    inputText = inputText.replace(/<ol>/g, '<ol class="ordered-list">');
-    
-    // 6. Добавить target="_blank" ко всем <a>
-    inputText = inputText.replace(/<a(?![^>]*target=["']_blank["'])/g, '<a target="_blank"');
+	// 5. Заменить <ol> на <ol class="ordered-list">
+	inputText = inputText.replace(/<ol>/g, '<ol class="ordered-list">');
 
-    
+	// 6. Добавить target="_blank" ко всем <a>
+	inputText = inputText.replace(
+		/<a(?![^>]*target=["']_blank["'])/g,
+		'<a target="_blank"'
+	);
 
-    //7. Замена любого <code> на чистый <code>
-    inputText = inputText.replace(/<code\b[^>]*>/gi, '<code>');
+	//7. Замена любого <code> на чистый <code>
+	inputText = inputText.replace(/<code\b[^>]*>/gi, "<code>");
 
-    //8. Замена <span> с атрибутами на простой <span>
-    inputText = inputText.replace(/<span\b[^>]*>/gi, '<span>');
+	//8. Замена <span> с атрибутами на простой <span>
+	inputText = inputText.replace(/<span\b[^>]*>/gi, "<span>");
 
-    //9. Замена <strong> с атрибутами на простой <span>
-    inputText = inputText.replace(/<strong\b[^>]*>/gi, '<strong>');
+	//9. Замена <strong> с атрибутами на простой <span>
+	inputText = inputText.replace(/<strong\b[^>]*>/gi, "<strong>");
 
-    //10. Удаление <em> с атрибутами и его закрывающего тега
-    inputText = inputText.replace(/<em\b[^>]*>/gi, '').replace(/<\/em>/gi, '');
+	//10. Удаление <em> с атрибутами и его закрывающего тега
+	inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
 
-    //11. Замена <div style="padding: 20px; margin: 20px; border: 2px solid #00b43f; border-radius: 10px;"> на <div class="term">
-    inputText = inputText.replace(/<div\b[^>]*style=["']padding:\s*20px;\s*margin:\s*20px;\s*border:\s*2px\s*solid\s*#00b43f;\s*border-radius:\s*10px;["'][^>]*>/gi, '<div class="term">');
+	//11. Замена <div style="padding: 20px; margin: 20px; border: 2px solid #00b43f; border-radius: 10px;"> на <div class="term">
+	inputText = inputText.replace(
+		/<div\b[^>]*style=["']padding:\s*20px;\s*margin:\s*20px;\s*border:\s*2px\s*solid\s*#00b43f;\s*border-radius:\s*10px;["'][^>]*>/gi,
+		'<div class="term">'
+	);
 
-    //12. Удаление комментария <!-- HTML generated using hilite.me -->
-    inputText = inputText.replace(/<!--\s*HTML generated using hilite\.me\s*-->/gi, '');
+	//12. Удаление комментария <!-- HTML generated using hilite.me -->
+	inputText = inputText.replace(
+		/<!--\s*HTML generated using hilite\.me\s*-->/gi,
+		""
+	);
 
-    //13. Удаление <div style="border-left: 5px solid #00b43f; padding-left: 10px;">, оставляя контент внутри
-    inputText = inputText.replace(/<div\b[^>]*style=["']border-left:\s*5px\s*solid\s*#00b43f;\s*padding-left:\s*10px;["'][^>]*>([\s\S]*?)<\/div>/gi, '$1');
+	//13. Удаление <div style="border-left: 5px solid #00b43f; padding-left: 10px;">, оставляя контент внутри
+	inputText = inputText.replace(
+		/<div\b[^>]*style=["']border-left:\s*5px\s*solid\s*#00b43f;\s*padding-left:\s*10px;["'][^>]*>([\s\S]*?)<\/div>/gi,
+		"$1"
+	);
 
-    //14. Замена <tr> с атрибутами на простой <tr>
-    inputText = inputText.replace(/<tr\b[^>]*>/gi, '<tr>');
+	//14. Замена <tr> с атрибутами на простой <tr>
+	inputText = inputText.replace(/<tr\b[^>]*>/gi, "<tr>");
 
-    //15. Замена <td> с атрибутами на простой <td>
-    inputText = inputText.replace(/<td\b[^>]*>/gi, '<td>');
+	//15. Замена <td> с атрибутами на простой <td>
+	inputText = inputText.replace(/<td\b[^>]*>/gi, "<td>");
 
-    //16. Замена <p> с атрибутами на простой <p>
-    inputText = inputText.replace(/<p\b[^>]*>/gi, '<p>');
+	//16. Замена <p> с атрибутами на простой <p>
+	inputText = inputText.replace(/<p\b[^>]*>/gi, "<p>");
 
-    //17. Заменяем <h4> на <div class="h4"> и </h4> на </div>
-    inputText = inputText.replace(/<h4>/g, '<p></p><div class="h4">').replace(/<\/h4>/g, '</div>');
+	//17. Заменяем <h4> на <div class="h4"> и </h4> на </div>
+	inputText = inputText
+		.replace(/<h4>/g, '<p></p><div class="h4">')
+		.replace(/<\/h4>/g, "</div>");
 
-    //Main и p в начало текста + div в самый конец
-    
+	//Main и p в начало текста + div в самый конец
 
+	inputText = inputText.replace(
+		/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/g,
+		(match, p1, p2, p3) => {
+			// Удаляем теги <span> и </span> внутри содержимого <pre>
+			const cleanedContent = p2.replace(/<\/?span[^>]*>/g, "");
+			// Возвращаем результат с сохранением тегов <pre>
+			return p1 + cleanedContent + p3;
+		}
+	);
 
+	inputText = inputText.replace(
+		/(<div style="background-color: #f5f5f5; padding: 15px;">)([\s\S]*?)(<\/div>)/,
+		(match, p1, p2, p3) => {
+			// Замена открывающего тега <div>
+			const newOpeningTag =
+				'<div class="module-author"><div class="module-author-descr">';
+			// Замена закрывающего тега </div> с добавлением еще одного </div>
+			const newClosingTag = "</div></div>";
+			// Возвращаем результат с замененными тегами
+			return newOpeningTag + p2 + newClosingTag;
+		}
+	);
 
-
-    inputText = inputText.replace(/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/g, (match, p1, p2, p3) => {
-    // Удаляем теги <span> и </span> внутри содержимого <pre>
-    const cleanedContent = p2.replace(/<\/?span[^>]*>/g, '');
-    // Возвращаем результат с сохранением тегов <pre>
-    return p1 + cleanedContent + p3;
-    });
-
-
-    inputText = inputText.replace(/(<div style="background-color: #f5f5f5; padding: 15px;">)([\s\S]*?)(<\/div>)/, (match, p1, p2, p3) => {
-    // Замена открывающего тега <div>
-    const newOpeningTag = '<div class="module-author"><div class="module-author-descr">';
-    // Замена закрывающего тега </div> с добавлением еще одного </div>
-    const newClosingTag = '</div></div>';
-    // Возвращаем результат с замененными тегами
-    return newOpeningTag + p2 + newClosingTag;
-});
-
-    inputText = inputText.replace(/<div class="important">\s*<p>(.*?)<\/p>\s*<\/div>/gs, 
-        `<div class="color-container container-flex blue-container">
+	inputText = inputText.replace(
+		/<div class="important">\s*<p>(.*?)<\/p>\s*<\/div>/gs,
+		`<div class="color-container container-flex blue-container">
             <div class="container-icon">
                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99581 3.99658C6.99581 6.20664 5.2042 7.99825 2.99414 7.99825C5.2042 7.99825 6.99581 9.78986 6.99581 11.9999C6.99581 9.78986 8.78741 7.99825 10.9975 7.99825C8.78741 7.99825 6.99581 6.20664 6.99581 3.99658Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -217,12 +248,11 @@ inputText = processBlocks(
                 </div>
             <span>$1</span>
         </div>`
-    );
+	);
 
-
-
-    inputText = inputText.replace(/<div\s+class="important\s+important-filled">([\s\S]*?)<\/div>/g, 
-        `<div class="color-container container-flex blue-container">
+	inputText = inputText.replace(
+		/<div\s+class="important\s+important-filled">([\s\S]*?)<\/div>/g,
+		`<div class="color-container container-flex blue-container">
             <div class="container-icon">
                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99581 3.99658C6.99581 6.20664 5.2042 7.99825 2.99414 7.99825C5.2042 7.99825 6.99581 9.78986 6.99581 11.9999C6.99581 9.78986 8.78741 7.99825 10.9975 7.99825C8.78741 7.99825 6.99581 6.20664 6.99581 3.99658Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -232,39 +262,57 @@ inputText = processBlocks(
                 </div>
             <span>$1</span>
         </div>`
-    );
+	);
 
+	inputText = inputText.replace(
+		/<div\s+class="example">/g,
+		'<div class="block-example">'
+	);
 
-    inputText = inputText.replace(/<div\s+class="example">/g, '<div class="block-example">');
+	inputText = inputText.replace(
+		/<figure\s+class="img">\s*<img\s+class="img-bg"\s+src="\/asset-v1:SkillFactory\+MIPTDPM\+SEPT22\+type@asset\+block@star-fill\.svg"\s+width="24"\s+height="24">\s*<\/figure>/g,
+		""
+	);
 
+	inputText = inputText
+		.replace(
+			/<div class="glossary">/g,
+			'<div class="color-container blue-container">'
+		)
+		.replace(/<\/h1>/g, "</div>");
 
-    inputText = inputText.replace(/<figure\s+class="img">\s*<img\s+class="img-bg"\s+src="\/asset-v1:SkillFactory\+MIPTDPM\+SEPT22\+type@asset\+block@star-fill\.svg"\s+width="24"\s+height="24">\s*<\/figure>/g, '');
+	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
+		if (checkbox.checked) {
+			switch (checkbox.dataset.checkbox) {
+				case "main":
+					inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, "\n</div>");
+					break;
+				case "table":
+					inputText = inputText.replace(/<table[^>]*>/gi,'<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
+					inputText = inputText.replace(/<\/table[^>]*>/gi,"</tbody>\n</table>\n</div>\n");
+					break;
+				case "br":
+					inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
+					break;
+				case "deleteDiv":
+					inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,"");
+					break;
+			}
+		}
+	});
 
-    inputText = inputText.replace(/<div class="glossary">/g, '<div class="color-container blue-container">').replace(/<\/h1>/g, '</div>');
+	// Вывод результата
+	document.getElementById("outputText").value = inputText;
 
+	// Копирование в буфер обмена
+	navigator.clipboard
+		.writeText(outputText.value)
+		.then(() => {
+			
+		})
+		.catch((err) => {
+			console.error("Ошибка при копировании текста:", err);
+		});
 
-    document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
-        if (checkbox.checked) {
-            switch (checkbox.dataset.checkbox) {
-                case 'main':
-                    inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, '\n</div>');
-                    break;
-                case 'table':
-                    inputText = inputText.replace(/<table[^>]*>/gi, '<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
-                    inputText = inputText.replace(/<\/table[^>]*>/gi, '</tbody>\n</table>\n</div>\n');
-                    break;
-                case 'br':
-                    inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
-                    break;
-                case 'deleteDiv':
-                    inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,'');
-                    break;
-            }
-        }
-    });
-
-
-    // Вывод результата
-    document.getElementById('outputText').value = inputText;
 });
 
