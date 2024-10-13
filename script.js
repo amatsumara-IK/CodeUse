@@ -139,7 +139,6 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		`</div>`
 	);
 
-	// Новые условия
 	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
 	inputText = inputText
 		.replace(/<h1>/g, '<p></p><div class="h1">')
@@ -154,64 +153,71 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	inputText = inputText
 		.replace(/<h3>/g, '<p></p><div class="h3">')
 		.replace(/<\/h3>/g, "</div>");
+	
+	//4. Заменяем <h4> на <div class="text-problem-title"> и </h4> на </div>
+	inputText = inputText
+	.replace(/<h4>/g, '<p></p><div class="text-problem-title">')
+	.replace(/<\/h4>/g, "</div>");
+	
 
-	// 4. Заменить <ul> на <ul class="list">
+	// 5. Заменить <ul> на <ul class="list">
 	inputText = inputText.replace(/<ul>/g, '<ul class="list">');
 
-	// 5. Заменить <ol> на <ol class="ordered-list">
+	// 6. Заменить <ol> на <ol class="ordered-list">
 	inputText = inputText.replace(/<ol>/g, '<ol class="ordered-list">');
 
-	// 6. Добавить target="_blank" ко всем <a>
+	// 7. Добавить target="_blank" ко всем <a>
 	inputText = inputText.replace(
 		/<a(?![^>]*target=["']_blank["'])/g,
 		'<a target="_blank"'
 	);
 
-	//7. Замена любого <code> на чистый <code>
+
+
+	
+	
+	//==========================================
+	//Удаление и замена элементов старой верстки
+	//==========================================
+
+	// Замена любого <code> на чистый <code>
 	inputText = inputText.replace(/<code\b[^>]*>/gi, "<code>");
 
-	//8. Замена <span> с атрибутами на простой <span>
+	// Замена <span> с атрибутами на простой <span>
 	inputText = inputText.replace(/<span\b[^>]*>/gi, "<span>");
 
-	//9. Замена <strong> с атрибутами на простой <span>
+	// Замена <strong> с атрибутами на простой <span>
 	inputText = inputText.replace(/<strong\b[^>]*>/gi, "<strong>");
 
-	//10. Удаление <em> с атрибутами и его закрывающего тега
+	// Удаление <em> с атрибутами и его закрывающего тега
 	inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
 
-	//11. Замена <div style="padding: 20px; margin: 20px; border: 2px solid #00b43f; border-radius: 10px;"> на <div class="term">
+	// Замена <div style="padding: 20px; margin: 20px; border: 2px solid #00b43f; border-radius: 10px;"> на <div class="term">
 	inputText = inputText.replace(
 		/<div\b[^>]*style=["']padding:\s*20px;\s*margin:\s*20px;\s*border:\s*2px\s*solid\s*#00b43f;\s*border-radius:\s*10px;["'][^>]*>/gi,
 		'<div class="term">'
 	);
 
-	//12. Удаление комментария <!-- HTML generated using hilite.me -->
+	//Удаление комментария <!-- HTML generated using hilite.me -->
 	inputText = inputText.replace(
 		/<!--\s*HTML generated using hilite\.me\s*-->/gi,
 		""
 	);
 
-	//13. Удаление <div style="border-left: 5px solid #00b43f; padding-left: 10px;">, оставляя контент внутри
+	//Удаление <div style="border-left: 5px solid #00b43f; padding-left: 10px;">, оставляя контент внутри
 	inputText = inputText.replace(
 		/<div\b[^>]*style=["']border-left:\s*5px\s*solid\s*#00b43f;\s*padding-left:\s*10px;["'][^>]*>([\s\S]*?)<\/div>/gi,
 		"$1"
 	);
-
-	//14. Замена <tr> с атрибутами на простой <tr>
+	
+	// Замена <tr> с атрибутами на простой <tr>
 	inputText = inputText.replace(/<tr\b[^>]*>/gi, "<tr>");
 
-	//15. Замена <td> с атрибутами на простой <td>
+	// Замена <td> с атрибутами на простой <td>
 	inputText = inputText.replace(/<td\b[^>]*>/gi, "<td>");
 
-	//16. Замена <p> с атрибутами на простой <p>
+	// Замена <p> с атрибутами на простой <p>
 	inputText = inputText.replace(/<p\b[^>]*>/gi, "<p>");
-
-	//17. Заменяем <h4> на <div class="h4"> и </h4> на </div>
-	inputText = inputText
-		.replace(/<h4>/g, '<p></p><div class="h4">')
-		.replace(/<\/h4>/g, "</div>");
-
-	//Main и p в начало текста + div в самый конец
 
 	inputText = inputText.replace(
 		/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/g,
@@ -222,6 +228,7 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			return p1 + cleanedContent + p3;
 		}
 	);
+
 
 	inputText = inputText.replace(
 		/(<div style="background-color: #f5f5f5; padding: 15px;">)([\s\S]*?)(<\/div>)/,
@@ -276,11 +283,9 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	inputText = inputText.replace(/<div class="glossary">/g,'<div class="color-container blue-container">').replace(/<\/h1>/g, "</div>");
 
-	//Замена IMG краказябры на норм шаблон
-
-	inputText = inputText.replace(/<p>\s*<p><span>>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.png"[^>]*>\s*<\/p>/gs, 
-		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
-	
+	//==========================================
+	//Конец блока
+	//==========================================
 	
 
 	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
@@ -290,7 +295,7 @@ document.getElementById('transformButton').addEventListener('click', function() 
 					inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, "\n</div>");
 					break;
 				case "table":
-					inputText = inputText.replace(/<table[^>]*>/gi,'<div class="overflow-table">\n<table style="max-width: 800px;">\n<tbody>\n');
+					inputText = inputText.replace(/<table[^>]*>/gi,'<div class="overflow-table">\n<table>\n<tbody>\n');
 					inputText = inputText.replace(/<\/table[^>]*>/gi,"</tbody>\n</table>\n</div>\n");
 					break;
 				case "br":
@@ -302,6 +307,12 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			}
 		}
 	});
+
+	//Замена IMG краказябры на норм шаблон
+
+	inputText = inputText.replace(/<p>\s*<p><span>>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.png"[^>]*>\s*<\/p>/gs, 
+		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+	
 
 	// Вывод результата
 	document.getElementById("outputText").value = inputText;
