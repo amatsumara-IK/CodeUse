@@ -297,6 +297,7 @@ document.getElementById('transformButton').addEventListener('click', function() 
 				case "em":
 					// Удаление <em> с атрибутами и его закрывающего тега
 					inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
+					break;
 				case "br":
 					inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
 					break;
