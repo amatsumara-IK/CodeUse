@@ -141,22 +141,22 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
 	inputText = inputText
-		.replace(/<h1>/g, '<p></p><div class="h1">')
+		.replace(/<h1(\s+[^>]*)?>/g, '<p></p><div class="h1">')
 		.replace(/<\/h1>/g, "</div>");
 
 	// 2. Заменить <h2> на <p></p><div class="h2"> и </h2> на </div>
 	inputText = inputText
-		.replace(/<h2>/g, '<p></p><div class="h2">')
+		.replace(/<h2(\s+[^>]*)?>/g, '<p></p><div class="h2">')
 		.replace(/<\/h2>/g, "</div>");
 
 	// 3. Заменить <h3> на <p></p><div class="h3"> и </h3> на </div>
 	inputText = inputText
-		.replace(/<h3>/g, '<p></p><div class="h3">')
+		.replace(/<h3(\s+[^>]*)?>/g, '<p></p><div class="h3">')
 		.replace(/<\/h3>/g, "</div>");
 	
 	//4. Заменяем <h4> на <div class="text-problem-title"> и </h4> на </div>
 	inputText = inputText
-	.replace(/<h4>/g, '<p></p><div class="text-problem-title">')
+	.replace(/<h4(\s+[^>]*)?>/g, '<p></p><div class="text-problem-title">')
 	.replace(/<\/h4>/g, "</div>");
 	
 
