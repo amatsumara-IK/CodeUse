@@ -172,7 +172,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		'<a target="_blank"'
 	);
 
-
+	//8. Привести таблицу в шаблонный вид
+	inputText = inputText.replace(/<table[^>]*>/gi,'<div class="overflow-table">\n<table>\n<tbody>\n').replace(/<\/table[^>]*>/gi,"</tbody>\n</table>\n</div>\n");
 
 	
 	
@@ -189,8 +190,6 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	// Замена <strong> с атрибутами на простой <span>
 	inputText = inputText.replace(/<strong\b[^>]*>/gi, "<strong>");
 
-	// Удаление <em> с атрибутами и его закрывающего тега
-	inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
 
 	// Замена <div style="padding: 20px; margin: 20px; border: 2px solid #00b43f; border-radius: 10px;"> на <div class="term">
 	inputText = inputText.replace(
@@ -213,8 +212,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	// Замена <tr> с атрибутами на простой <tr>
 	inputText = inputText.replace(/<tr\b[^>]*>/gi, "<tr>");
 
-	// Замена <td> с атрибутами на простой <td>
-	inputText = inputText.replace(/<td\b[^>]*>/gi, "<td>");
+/* 	// Замена <td> с атрибутами на простой <td>
+	inputText = inputText.replace(/<td\b[^>]*>/gi, "<td>"); */
 
 	// Замена <p> с атрибутами на простой <p>
 	inputText = inputText.replace(/<p\b[^>]*>/gi, "<p>");
@@ -228,6 +227,7 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			return p1 + cleanedContent + p3;
 		}
 	);
+
 
 
 	inputText = inputText.replace(
@@ -294,10 +294,9 @@ document.getElementById('transformButton').addEventListener('click', function() 
 				case "main":
 					inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, "\n</div>");
 					break;
-				case "table":
-					inputText = inputText.replace(/<table[^>]*>/gi,'<div class="overflow-table">\n<table>\n<tbody>\n');
-					inputText = inputText.replace(/<\/table[^>]*>/gi,"</tbody>\n</table>\n</div>\n");
-					break;
+				case "em":
+					// Удаление <em> с атрибутами и его закрывающего тега
+					inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
 				case "br":
 					inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
 					break;
