@@ -141,22 +141,22 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
 	inputText = inputText
-		.replace(/<h1(\s+[^>]*)?>/g, '<p></p><div class="h1">')
+		.replace(/<h1(\s+[^>]*)?>/g, '<div class="h1">')
 		.replace(/<\/h1>/g, "</div>");
 
 	// 2. Заменить <h2> на <p></p><div class="h2"> и </h2> на </div>
 	inputText = inputText
-		.replace(/<h2(\s+[^>]*)?>/g, '<p></p><div class="h2">')
+		.replace(/<h2(\s+[^>]*)?>/g, '<div class="h2">')
 		.replace(/<\/h2>/g, "</div>");
 
 	// 3. Заменить <h3> на <p></p><div class="h3"> и </h3> на </div>
 	inputText = inputText
-		.replace(/<h3(\s+[^>]*)?>/g, '<p></p><div class="h3">')
+		.replace(/<h3(\s+[^>]*)?>/g, '<div class="h3">')
 		.replace(/<\/h3>/g, "</div>");
 	
 	//4. Заменяем <h4> на <div class="text-problem-title"> и </h4> на </div>
 	inputText = inputText
-	.replace(/<h4(\s+[^>]*)?>/g, '<p></p><div class="text-problem-title">')
+	.replace(/<h4(\s+[^>]*)?>/g, '<div class="text-problem-title">')
 	.replace(/<\/h4>/g, "</div>");
 	
 
@@ -292,14 +292,11 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		if (checkbox.checked) {
 			switch (checkbox.dataset.checkbox) {
 				case "main":
-					inputText = inputText.replace(/^/, '<div class="main-block">\n<p></p>\n').replace(/$/, "\n</div>");
+					inputText = inputText.replace(/^/, '<div class="main-block">\n').replace(/$/, "\n</div>");
 					break;
 				case "em":
 					// Удаление <em> с атрибутами и его закрывающего тега
 					inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
-					break;
-				case "br":
-					inputText = inputText.replace(/<\/(ul|ol)>/g, "</$1><br/>");
 					break;
 				case "deleteDiv":
 					inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,"");
