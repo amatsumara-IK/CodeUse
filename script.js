@@ -307,8 +307,9 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	//Замена IMG краказябры на норм шаблон
 
-	inputText = inputText.replace(/<p>\s*<p><span>>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.png"[^>]*>\s*<\/p>/gs, 
-		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+	inputText = inputText.replace(/<p[^>]*?>\s*<p[^>]*?><span>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.(jpg|png)"[^>]*>\s*<\/p>/gs, 
+    '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+
 	
 
 	// Вывод результата
