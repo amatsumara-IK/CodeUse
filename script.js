@@ -81,8 +81,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 1: $imp
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<strong>\s*\$imp\s*<\/strong>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>/,
+		/<p>\s*<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<strong>\s*\$imp\s*<\/strong>|<p>\s*\$imp\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
 		`<div class="color-container container-flex blue-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -103,8 +103,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 2: $case
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<strong>\s*\$case\s*<\/strong>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>/,
+		/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<strong>\s*\$case\s*<\/strong>|<p>\s*\$case\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
 		`<div class="block-example">
 	<div class="example-title">Пример</div>`,
 		`</div>`
@@ -112,8 +112,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 3: $biblio
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<strong>\s*\$biblio\s*<\/strong>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>/,
+		/<p>\s*<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<strong>\s*\$biblio\s*<\/strong>|<p>\s*\$biblio\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
 		`<div class="color-container container-flex orange-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -133,11 +133,13 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 4: $term
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$term\s*<\/strong>\s*<\/p>|<strong>\s*\$term\s*<\/strong>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>/,
+		/<p>\s*<strong>\s*\$term\s*<\/strong>\s*<\/p>|<strong>\s*\$term\s*<\/strong>|<p>\s*\$term\s*<\/p>/,
+		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
 		`<div class="term">`,
 		`</div>`
 	);
+
+
 
 	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
 	inputText = inputText
@@ -305,10 +307,19 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		}
 	});
 
-	//Замена IMG краказябры на норм шаблон
+	
 
-	inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<p[^>]*?><span>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.(jpg|png)"[^>]*>\s*<\/p>/gs, 
+	/* inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<p[^>]*?><span>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.(jpg|png)"[^>]*>\s*<\/p>/gs, 
+    '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>'); */
+
+
+
+	//Замена IMG краказябры на норм шаблон
+	inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<span>>>>>.*?<\/span>\s*(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs, 
     '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+
+	
+	
 
 
 	
