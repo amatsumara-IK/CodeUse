@@ -220,6 +220,12 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	// Замена <p> с атрибутами на простой <p>
 	inputText = inputText.replace(/<p\b[^>]*>/gi, "<p>");
 
+	// Удаление стилей у pre (классы оставляем)
+	inputText = inputText.replace(
+		/<pre[^>]*\s*style="[^"]*"\s*([^>]*)>/g,
+		'<pre$1>'
+	);
+	
 	inputText = inputText.replace(
 		/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/g,
 		(match, p1, p2, p3) => {
@@ -229,6 +235,13 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			return p1 + cleanedContent + p3;
 		}
 	);
+
+	// Удаление блока
+	inputText = inputText.replace(
+		/<div[^>]*\s*style="background:\s*#f8f8f8;\s*overflow:\s*auto;\s*width:\s*auto;\s*max-width:\s*800px;\s*border:\s*solid\s+#d1d9d7;\s*border-width:\s*\.1em;\s*border-radius:\s*10px;\s*padding:\s*\.2em\s*\.6em;\s*margin:\s*20px\s*auto\s*20px\s*auto;"\s*[^>]*>(.*?)<\/div>/gs,
+		'$1'
+	);
+	
 
 
 
@@ -285,6 +298,9 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	inputText = inputText.replace(/<div class="glossary">/g,'<div class="color-container blue-container">').replace(/<\/h1>/g, "</div>");
 
+
+	
+
 	//==========================================
 	//Конец блока
 	//==========================================
@@ -303,21 +319,30 @@ document.getElementById('transformButton').addEventListener('click', function() 
 				case "deleteDiv":
 					inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,"");
 					break;
+				case "DivClean":
+					inputText = inputText.replace(
+						/<div(?![^>]*style="\s*position:\s*relative;\s*padding-top:\s*56\.25%;\s*width:\s*100%;\s*margin-bottom:\s*50px;\s*")[^>]*\s*style="[^"]*"\s*([^>]*)>/g,
+						'<div$1>');
+					break;
 			}
 		}
 	});
 
-	
-
-	/* inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<p[^>]*?><span>>>>>.*?<\/span>.*?<\/p>\s*<img src="images\/image\d+\.(jpg|png)"[^>]*>\s*<\/p>/gs, 
-    '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>'); */
-
 
 
 	//Замена IMG краказябры на норм шаблон
-	inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<span>>>>>.*?<\/span>\s*(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs, 
-    '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
+	inputText = inputText.replace(
+		/<p[^>]*?>\s*<p[^>]*?>\s*(<span[^>]*?>>>>>.*?<\/span>)\s*(<br>\s*)?(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs,
+		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>'
+	);
 
+	// Замена формул
+    inputText = inputText.replace(
+        /<p>\s*<span>>>>>>\s*.*?<\/span>\s*<br>\s*\(<a target="_blank" href="#">Back to top<\/a>\)\(<a target="_blank" href="#[^"]*">Next alert<\/a>\)\s*<br>\s*<span>>>>>>\s*<\/span>\s*<\/p>/gs,
+        '<!-- ФОРМУЛА -->'
+    );
+	
+	
 	
 	
 
@@ -338,4 +363,32 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		});
 
 });
+
+
+
+
+
+/* Нужно создать гибкий .replace, который будет обрабатывать определенное выражение, учитывая все пробелы и возможные отступы и вариации цифр.
+
+Выражение которое нужно найти и заменить:
+
+<p>
+
+
+<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+
+
+<img src="images/image2.png" width="" alt="alt_text" title="image_tooltip">
+
+</p>
+
+ */
+
+
+
+
+
+
+
+
 
