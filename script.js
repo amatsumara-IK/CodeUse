@@ -81,8 +81,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 1: $imp
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<strong>\s*\$imp\s*<\/strong>|<p>\s*\$imp\s*<\/p>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$imp\s*<\/strong>\s*<\/p>|<strong>\s*\$imp\s*<\/strong>|<p>\s*(<br>\s*)?\$imp\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*(<br>\s*)?\$end\s*<\/p>/,
 		`<div class="color-container container-flex blue-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -103,17 +103,20 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 2: $case
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$case\s*<\/strong>\s*<\/p>|<strong>\s*\$case\s*<\/strong>|<p>\s*\$case\s*<\/p>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$case\s*<\/strong>\s*<\/p>|<strong>\s*\$case\s*<\/strong>|<p>\s*(<br>\s*)?\$case\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*(<br>\s*)?\$end\s*<\/p>/,
 		`<div class="block-example">
-	<div class="example-title">Пример</div>`,
+		<div class="example-title">Пример</div>`,
 		`</div>`
 	);
 
+	
+	
+
 	// Условие 3: $biblio
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<strong>\s*\$biblio\s*<\/strong>|<p>\s*\$biblio\s*<\/p>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$biblio\s*<\/strong>\s*<\/p>|<strong>\s*\$biblio\s*<\/strong>|<p>\s*(<br>\s*)?\$biblio\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*(<br>\s*)?\$end\s*<\/p>/,
 		`<div class="color-container container-flex orange-container">
             <div class="container-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -133,8 +136,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 	// Условие 4: $term
 	inputText = processBlocks(
-		/<p>\s*<strong>\s*\$term\s*<\/strong>\s*<\/p>|<strong>\s*\$term\s*<\/strong>|<p>\s*\$term\s*<\/p>/,
-		/<p>\s*<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*\$end\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$term\s*<\/strong>\s*<\/p>|<strong>\s*\$term\s*<\/strong>|<p>\s*(<br>\s*)?\$term\s*<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*<\/p>|<strong>\s*\$end\s*<\/strong>|<p>\s*(<br>\s*)?\$end\s*<\/p>/,
 		`<div class="term">`,
 		`</div>`
 	);
