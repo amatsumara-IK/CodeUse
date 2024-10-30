@@ -340,14 +340,15 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>'
 	); */
 
+	//Замена IMG краказябры на норм шаблон [Оставляет <p> в самом начале]
 	inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<span>>>>>.*?<\/span>\s*(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs, 
     '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
 
-	/* // Замена формул [Хватает те части, которые не обработало изображение]
+	// Замена формул [Хватает те части, которые не обработало изображение]
     inputText = inputText.replace(
         /<p>\s*<span>>>>>>\s*.*?<\/span>\s*<br>\s*\(<a target="_blank" href="#">Back to top<\/a>\)\(<a target="_blank" href="#[^"]*">Next alert<\/a>\)\s*<br>\s*<span>>>>>>\s*<\/span>\s*<\/p>/gs,
         '<!-- ФОРМУЛА -->'
-    ); */
+    );
 	
 	
 	
