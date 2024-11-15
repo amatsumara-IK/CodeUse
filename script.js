@@ -218,11 +218,14 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	// Замена <tr> с атрибутами на простой <tr>
 	inputText = inputText.replace(/<tr\b[^>]*>/gi, "<tr>");
 
-/* 	// Замена <td> с атрибутами на простой <td>
-	inputText = inputText.replace(/<td\b[^>]*>/gi, "<td>"); */
+	// Замена <td> с атрибутами на простой <td> (классы оставляем)
+	inputText = inputText.replace(/<td\s+([^>]*\s)?style="[^"]*"([^>]*)>/gi, '<td $1$2>');
 
-	// Замена <p> с атрибутами на простой <p>
-	inputText = inputText.replace(/<p\b[^>]*>/gi, "<p>");
+
+	// Замена <p> с атрибутами на простой <p> (классы оставляем)
+	inputText = inputText.replace(/<p\s+([^>]*\s)?style="[^"]*"([^>]*)>/gi, '<p $1$2>');
+
+
 
 	// Удаление стилей у pre (классы оставляем)
 	inputText = inputText.replace(
@@ -310,6 +313,25 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	//==========================================
 	
 
+	const selectedLanguage = document.getElementById('pre-language-select').value;
+
+	switch (selectedLanguage) {
+		case 'python':
+			// Заменить prettyprint на language-python
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-python">');
+			break;
+		case 'java':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-java">');
+			break;
+		case 'javascript':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-javascript">');
+			break;
+		case "notxexe":
+			break;
+		
+	}
+
+
 	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
 		if (checkbox.checked) {
 			switch (checkbox.dataset.checkbox) {
@@ -328,31 +350,33 @@ document.getElementById('transformButton').addEventListener('click', function() 
 						/<div(?![^>]*style="\s*position:\s*relative;\s*padding-top:\s*56\.25%;\s*width:\s*100%;\s*margin-bottom:\s*50px;\s*")[^>]*\s*style="[^"]*"\s*([^>]*)>/g,
 						'<div$1>');
 					break;
+				
 			}
 		}
 	});
 
 
 
-	/* //Замена IMG краказябры на норм шаблон [Хватает не все изображения]
+	// Замена формул
 	inputText = inputText.replace(
-		/<p[^>]*?>\s*<p[^>]*?>\s*(<span[^>]*?>>>>>.*?<\/span>)\s*(<br>\s*)?(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs,
-		'<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>'
-	); */
-
-	//Замена IMG краказябры на норм шаблон [Оставляет <p> в самом начале]
-	inputText = inputText.replace(/<p[^>]*?>\s*(<br>\s*)?<span>>>>>.*?<\/span>\s*(?:<br>.*?)*<img src="images\/image\d+\.(jpg|png|gif)"[^>]*>\s*<\/p>/gs, 
-    '<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>');
-
-	// Замена формул [Хватает те части, которые не обработало изображение]
-    inputText = inputText.replace(
-        /<p>\s*<span>>>>>>\s*.*?<\/span>\s*<br>\s*\(<a target="_blank" href="#">Back to top<\/a>\)\(<a target="_blank" href="#[^"]*">Next alert<\/a>\)\s*<br>\s*<span>>>>>>\s*<\/span>\s*<\/p>/gs,
-        '<!-- ФОРМУЛА -->'
-    );
+		/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs,
+		`<!-- ФОРМУЛА -->`
+	  );
+	  
 	
-	
-	
-	
+	//Замена img в таблице
+	inputText = inputText.replace(/<td>\s*<p id="gdcalert\d+"[^>]*>.*?gd2md-html alert.*?<img src="([^"]+)"[^>]*>\s*<\/td>/gs,
+	`<td>\n<figure class="img">\n<img src="$1" alt="img" width="">\n<p class="grey-text"></p>\n</figure>\n</td>`);
+	  
+	//Замена img с тегом <p> снаружи
+	inputText = inputText.replace(/(<p[^>]*>)\s*<p[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>(\s*<\/p>)/gs,
+	`<figure class="img">\n<img src="$2" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
+	  
+	//Замена img без <p> тега снаружи
+	inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>/gs,
+	`<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
+	  
+	  
 
 
 	
