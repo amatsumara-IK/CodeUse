@@ -21,6 +21,36 @@ document.querySelectorAll('input[data-checkbox]').forEach(checkbox => {
 // Загружаем состояние чекбоксов при загрузке страницы
 window.addEventListener('DOMContentLoaded', loadCheckboxState);
 
+
+
+// Функция для загрузки состояния select
+function loadSelectState() {
+    document.querySelectorAll('select[data-select]').forEach(select => {
+        const selectedValue = localStorage.getItem(select.dataset.select);
+        if (selectedValue) {
+            select.value = selectedValue;
+        }
+    });
+}
+
+// Функция для сохранения состояния select
+function saveSelectState() {
+    document.querySelectorAll('select[data-select]').forEach(select => {
+        localStorage.setItem(select.dataset.select, select.value);
+    });
+}
+// Добавляем обработчики событий для select
+document.querySelectorAll('select[data-select]').forEach(select => {
+    select.addEventListener('change', saveSelectState);
+});
+
+// Загружаем состояние select при загрузке страницы
+window.addEventListener('DOMContentLoaded', loadSelectState);
+
+
+
+
+
 // Функция для обработки текста с учетом состояния чекбоксов
 document.getElementById('transformButton').addEventListener('click', function() {
 	let inputText = document.getElementById("inputText").value;
