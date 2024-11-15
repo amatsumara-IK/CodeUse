@@ -396,11 +396,11 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	
 	//Замена img в таблице
 	inputText = inputText.replace(/<td>\s*<p id="gdcalert\d+"[^>]*>.*?gd2md-html alert.*?<img src="([^"]+)"[^>]*>\s*<\/td>/gs,
-	`<td>\n<figure class="img">\n<img src="$1" alt="img" width="">\n<p class="grey-text"></p>\n</figure>\n</td>`);
+	`<td>\n<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>\n</td>`);
 	  
 	//Замена img с тегом <p> снаружи
 	inputText = inputText.replace(/(<p[^>]*>)\s*<p[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>(\s*<\/p>)/gs,
-	`<figure class="img">\n<img src="$2" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
+	`<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
 	  
 	//Замена img без <p> тега снаружи
 	inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>/gs,
