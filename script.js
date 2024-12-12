@@ -356,9 +356,23 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		case 'javascript':
 			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-javascript">');
 			break;
+		case 'cpp':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-cpp">');
+			break;
+		case 'csharp':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-csharp">');
+			break;
+		case 'justc':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-c">');
+			break;
+		case 'php':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-php">');
+			break;
+		case 'markup':
+			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-markup">');
+			break;
 		case "notxexe":
 			break;
-		
 	}
 
 
@@ -427,24 +441,6 @@ document.getElementById('transformButton').addEventListener('click', function() 
 });
 
 
-
-
-
-/* Нужно создать гибкий .replace, который будет обрабатывать определенное выражение, учитывая все пробелы и возможные отступы и вариации цифр.
-
-Выражение которое нужно найти и заменить:
-
-<p>
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-<img src="images/image2.png" width="" alt="alt_text" title="image_tooltip">
-
-</p>
-
- */
 
 
 
