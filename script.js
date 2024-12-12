@@ -348,28 +348,28 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	switch (selectedLanguage) {
 		case 'python':
 			// Заменить prettyprint на language-python
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-python">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-python">');
 			break;
 		case 'java':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-java">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-java">');
 			break;
 		case 'javascript':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-javascript">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-javascript">');
 			break;
 		case 'cpp':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-cpp">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-cpp">');
 			break;
 		case 'csharp':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-csharp">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-csharp">');
 			break;
 		case 'justc':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-c">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-c">');
 			break;
 		case 'php':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-php">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-php">');
 			break;
 		case 'markup':
-			inputText = inputText.replace(/<pre class="prettyprint">/g, '<pre class="language-markup">');
+			inputText = inputText.replace(/<pre class="prettyprint">|<pre>/g, '<pre class="language-markup">');
 			break;
 		case "notxexe":
 			break;
