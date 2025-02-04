@@ -377,24 +377,32 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 
 	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
-		if (checkbox.checked) {
-			switch (checkbox.dataset.checkbox) {
+		const checkboxName = checkbox.dataset.checkbox;
+		
+		if (checkboxName === "add_formulas") {
+			if (checkbox.checked) {
+				inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs,"<!-- ФОРМУЛА -->\n\\(\\)");
+			} else {
+				inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs,
+					`<!-- ФОРМУЛА -->`);
+			}
+		} else if (checkbox.checked) {
+			switch (checkboxName) {
 				case "main":
 					inputText = inputText.replace(/^/, '<div class="main-block">\n').replace(/$/, "\n</div>");
 					break;
 				case "em":
-					// Удаление <em> с атрибутами и его закрывающего тега
 					inputText = inputText.replace(/<em\b[^>]*>/gi, "").replace(/<\/em>/gi, "");
 					break;
 				case "deleteDiv":
-					inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi,"");
+					inputText = inputText.replace(/\s*<div\s+class="example-title">\s*Пример\s*<\/div>\s*/gi, "");
 					break;
 				case "DivClean":
 					inputText = inputText.replace(
 						/<div(?![^>]*style="\s*position:\s*relative;\s*padding-top:\s*56\.25%;\s*width:\s*100%;\s*margin-bottom:\s*50px;\s*")[^>]*\s*style="[^"]*"\s*([^>]*)>/g,
-						'<div$1>');
+						'<div$1>'
+					);
 					break;
-				
 			}
 		}
 	});
