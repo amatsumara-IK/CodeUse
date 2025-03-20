@@ -139,7 +139,7 @@
             position: relative;
             padding: 20px 24px;
             color: #EEF1EF !important;
-            background-color: #961b1b;
+            background-color: #1c2321ff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -152,14 +152,14 @@
             transition: all 0.2s ease;
         }
 
-        button:hover {
+        #transformButton:hover {
          
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 3px 5px rgba(0, 0, 0, 0.19);
             transform: translateY(-1px);
         }
 
-        button:active {
-            background-color: #6a1616;
+        #transformButton:active {
+            background-color: #1c2321ff;
             transform: scale(0.995);
             transition: all 0.05s ease;
         }
@@ -231,18 +231,73 @@
             background: #e4e4e4;
         }
       
+        /* ============================================================================ */
+
+        .fortune-button {
+            display: flex;
+justify-content: center;
+align-items: center;
+            position: fixed;
+            bottom: 40px;
+            left: 70px;
+            width: 40px !important;
+            height: 40px !important;
+            border: none;
+            text-align:center !important;
+            font-size: 30px !important;
+            cursor: pointer;
+            background-color:transparent; 
+            transition: transform 0.2s ease;
+        }
+
+        .fortune-button:hover {
+            animation: pulse 1.5s infinite;
+        }
         
-        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .fortune-text {
+            text-align:center !important;
+            position: fixed;
+            bottom: 80px;
+            left: 10px;
+            font-size: 15px;
+            background-color: #8a43be87;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .big-emoji {
+            font-size: 25px;
+        }
+       /*  .magic-block {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            width: 190px;
+            height: 140px;
+            border-radius: 10px;
+
+           background-color: rgb(110, 50, 163) !important; 
+        } */
+
+
     </style>
-    <link href="snowFlakes/snow.min.css" rel="stylesheet">
+ 
 </head>
 
 <body>
     
-    <script src="snowFlakes/Snow.js"></script>
-    <script>
-        new Snow();
-    </script>
     
    
     <div class="options">
@@ -270,7 +325,7 @@
 
     <div class="container">
 
-        <textarea id="inputText" class="work-area" placeholder="Введите код здесь...🎅"></textarea>
+        <textarea id="inputText" class="work-area" placeholder="Введите код здесь..."></textarea>
 
 
 
@@ -291,7 +346,36 @@
 
     </div>
 
+    <div class="magic-block">
+    <button class="fortune-button">🔮</button>
+    <div class="fortune-text" id="fortuneText"></div>
+    </div>
+    
+    <script>
+        const emojis = ['🐵', '🐒', '🦍', '🦧', '🐶', '🐕', '🦮', '🐕‍🦺', '🐩', '🐺', '🦊', '🦝', '🐱', '🐈', '🐈‍⬛', '🦁', '🐯', '🐅', '🐆', '🐴', '🫎', '🫏', '🐎', '🦄', '🦓', '🦌', '🦬', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒', '🐘', '🦣', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿️', '🦫', '🦔', '🦇', '🐻', '🐻‍❄️', '🐨', '🐼', '🦥', '🦦', '🦨', '🦘', '🦡', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊️', '🦅', '🦆', '🦢', '🦉', '🦤', '🦩', '🦚', '🦜', '🐦‍⬛', '🪿', '🐦‍🔥', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🦕', '🦖', '🐳', '🐋', '🐬', '🦭', '🐟', '🐠', '🐡', '🦈', '🐙', '🐚', '🪼', '🐌', '🦋', '🐛', '🐜', '🐝', '🪲', '🐞', '🦗', '🪳', '🕷️', '🕸️', '🦂', '🦟', '🪰', '🪱', '🦠', '💐', '🌸', '💮', '🪷', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🪻', '🌱', '🪴', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🪹', '🪺', '🍄','🍞', '🥐', '🥨', '🥑', '🥕', '🌶️','👽'];
+
+        const button = document.querySelector('.fortune-button');
+        const textDiv = document.getElementById('fortuneText');
+
+        button.addEventListener('click', () => {
+                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                textDiv.innerHTML = `Кто ты сегодня: <span class="big-emoji">${randomEmoji}</span>`;
+                textDiv.style.display = 'block';
+
+                // Очищаем предыдущий таймер, если он существует
+                if (textDiv.timeoutId) {
+                    clearTimeout(textDiv.timeoutId);
+                }
+
+                // Запускаем новый таймер и сохраняем его ID
+                textDiv.timeoutId = setTimeout(() => {
+                    textDiv.style.display = 'none';
+                }, 3000);
+            });
+    </script>
+
     <script src="script.js"></script>
+    
     
     
 </body>
