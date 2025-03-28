@@ -3,7 +3,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cygre Light:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
 <!-- https://coolors.co/1c2321-7d98a1-5e6572-a9b4c2-eef1ef  -->
 
@@ -11,322 +12,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/favicon11.ico" type="image/x-icon">
-    
+    <link rel="icon" href="images/favicon/fav_coffe_1.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+
     <title>CodeUse | SF</title>
-    <style>
-        @font-face {
-            font-family: 'Mont';
-            src: url('/Mont-Regular.ttf') format('truetype');
-            font-weight: 600;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Mont';
-            src: url('/Mont-SemiBold.ttf') format('truetype');
-            font-weight: 700;
-            font-style: bold;
-        }
- 
-
-        body {
-            font-family: 'Mont', Arial, sans-serif !important;
-            font-style: normal !important;
-            font-weight: 600 !important;
-            font-size: 18px !important;
-            line-height: 28px !important;
-            display: flex;
-            justify-content: center;
-            width: min(100%, 1500px);
-            margin: 30px auto;
-            word-break: break-word;
-            background-color: #7D98A1;
-        }
-         .main {
-
-            display: flex;
-            justify-content: center;
-            max-width: 120px;
-            word-break: break-word;
-            background-color: #7D98A1;
-         }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            flex: 1 1 800px;
-            
-            margin: 0 auto;
-            
-        }
-
-        .options {
-            display: flex;  
-            flex-direction: column;
-            flex: 1 1  350px;
-            font-family: "Montserrat", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: normal;
-            font-size: 15px !important;
-            line-height: 24px !important;
-
-        }
-
-        .options p {
-            margin-bottom: 5px;
-        
-        }
-
-        .options-delete {
-            display: flex;  
-            flex-direction: column;
-            flex: 1 1  350px;
-            font-family: "Montserrat", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: normal;
-            font-size: 15px !important;
-            line-height: 24px !important;
-            margin-left: 10px;
-
-           
-        }
-
-        .space {
-            flex: 1;
-        }
-
-        textarea {
-            width: 100%;
-            height: 250px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            line-height: 1.5;
-            resize: vertical;
-            background-color: #EEF1EF;
-            color: #333;
-        }
-        code {
-              font-family: 'PT Mono', monospace !important;
-              font-style: normal !important;
-              font-weight: 400 !important;
-              box-sizing: border-box !important;
-              font-size: 13px;
-              background-color: #a9b4c2ff !important;
-              border-radius: 3px !important;
-              padding: 0 2px 0 2px !important;
-              display: inline-block;
-              padding-bottom: 10px;
-              position: relative;
-              bottom: 2px;
-              
-
-                }
-        
-        textarea:focus {
-            outline: none; /* Убирает контур при фокусировке */
-        }
-
-        button {
-            margin: 0 auto;
-            max-width: 250px;
-            position: relative;
-            padding: 20px 24px;
-            color: #EEF1EF !important;
-            background-color: #1c2321ff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: fit-content !important;
-            font-family: 'Mont-Regular', Arial, sans-serif !important;
-            font-style: normal;
-            font-weight: 500 !important;
-            font-size: 17px !important;
-            line-height: 20px !important;
-            transition: all 0.2s ease;
-        }
-
-        #transformButton:hover {
-         
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 3px 5px rgba(0, 0, 0, 0.19);
-            transform: translateY(-1px);
-        }
-
-        #transformButton:active {
-            background-color: #1c2321ff;
-            transform: scale(0.995);
-            transition: all 0.05s ease;
-        }
-
-        .output-container {
-            position: relative;
-        }
-
-        .copy-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            cursor: pointer;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .copy-button:hover {
-            background-color: #218838;
-        }
-
-        .work-area--animated {
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-       
 
 
-
-        /* Меняем цвет акцента */
-        .styled-checkbox {
-          position: relative;
-          top:2px;
-          accent-color: #a9b4c2ff; /* Меняет основной цвет галочки */
-          width: 18px;
-          height: 18px;
-          cursor: pointer;
-          transform: scale(0.9); /* Увеличивает чекбокс */
-        }
-        
-        /* Эффект при наведении */
-        .styled-checkbox:hover {
-          filter: brightness(0.9); /* Затемняет при наведении */
-        }
-        
-        
-        /* Стили для состояния "checked" */
-        .styled-checkbox:checked {
-          accent-color: #a9b4c2ff; /* Меняет цвет при выборе */
-        }
-        
-        #pre-language-select{
-            max-width: 123px;
-            border-radius: 3px;
-            background: #e4e4e4;
-        }
-      
-        /* ============================================================================ */
-
-        .fortune-button {
-            display: flex;
-justify-content: center;
-align-items: center;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 40px !important;
-            height: 40px !important;
-            border: none;
-            text-align:center !important;
-            font-size: 30px !important;
-            cursor: pointer;
-            background-color:transparent; 
-            transition: transform 0.2s ease;
-        }
-
-        .fortune-button:hover {
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .fortune-text {
-            text-align:center !important;
-            position: fixed;
-            bottom: 65px;
-            left: 25px;
-            font-size: 15px;
-            color: white;
-            background-color: #2b3230;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: none;
-        }
-        .big-emoji {
-            font-size: 25px;
-        }
-       /*  .magic-block {
-            position: fixed;
-            bottom: 0px;
-            left: 0px;
-            width: 190px;
-            height: 140px;
-            border-radius: 10px;
-
-           background-color: rgb(110, 50, 163) !important; 
-        } */
-
-
-    </style>
- 
 </head>
 
 <body>
-    
-    
-   
-    <div class="options">
-        <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="main" class="styled-checkbox" checked> Обернуть код в main-block</p>
-        <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="add_formulas" class="styled-checkbox"
-                checked>
-            Добавить обертку <code>\(\)</code> под формулу</p>
-        <p style="margin-left: 20px !important;">- Изменить <code>&lt;pre class=...></code></p>
-        <select  style="margin-left: 110px !important;" data-select="pre-language" id="pre-language-select">
-            <option value="python">Python</option>
-            <option value="java">Java</option>
-            <option value="javascript">JavaScript</option>
-            <option value="cpp">C++</option>
-            <option value="csharp">C#</option>
-            <option value="justc">C</option>
-            <option value="php">PHP</option>
-            <option value="markup">HTML</option>
-            <option value="notxexe">Don't touch my pre!</option>
-        </select>
-        <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="span-div" class="styled-checkbox" checked>
-                Заменить <code>&lt;span></code> на <code>&lt;div></code> [imp|biblio]</p>
-        
-        
+    <img id="img_1" src="./images/Picture_1.svg" alt="img" width="">
+    <img id="img_2" src="./images/Picture_2.svg" alt="img" width="">
+
+    <div class="all-options">
+        <div class="options">
+            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="main"
+                    class="styled-checkbox" checked><span class="text-background">Обернуть код в main-block</span></p>
+            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="add_formulas"
+                    class="styled-checkbox" checked><span class="text-background">Добавить обертку <span
+                        class="text-strong-code">\(\)</span> под формулу</span></p>
+            <p style="margin-left: 28px !important; margin-top: 24px !important;"><span class="text-background">Изменить
+                    <span class="text-strong-code">&lt;pre class=...></span></span>
+                <select class="select" data-select="pre-language" id="pre-language-select">
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="javascript">JS</option>
+                    <option value="cpp">C++</option>
+                    <option value="csharp">C#</option>
+                    <option value="justc">C</option>
+                    <option value="php">PHP</option>
+                    <option value="markup">HTML</option>
+                    <option value="notxexe">Default</option>
+                </select>
+            </p>
+
+            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="span-div"
+                    class="styled-checkbox" checked><span class="text-background">Заменить <span
+                        class="text-strong-code">&lt;span></span> на <span class="text-strong-code">&lt;div></span>
+                    [imp|biblio]</span></p>
+
+        </div>
+
+        <div class="options-delete">
+            <p style="margin-bottom: 0px !important; font-size: 17px;">Удалить: </p>
+
+            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="deleteDiv"
+                    class="styled-checkbox" checked><span class="text-background"><span class="text-strong-code">&lt;div
+                        class="example-title"&gt;Пример&lt;/div&gt</span></span></p>
+            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="em" class="styled-checkbox"
+                    checked><span class="text-background"><span class="text-strong-code">&lt;em> (курсив)</span></span>
+            </p>
+            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="DivClean"
+                    class="styled-checkbox" checked><span class="text-background">Очистить стили у всех <span
+                        class="text-strong-code">&lt;div></span> <span class="text-strong-code"
+                        style="font-size: 13px !important; font-weight: lighter !important;">(кроме видео)</span></span>
+            </p>
 
 
+        </div>
     </div>
 
-    <div class="container">
+    <div class="container-text">
 
         <textarea id="inputText" class="work-area" placeholder="Введите код здесь..."></textarea>
 
@@ -337,50 +83,43 @@ align-items: center;
             <textarea id="outputText" readonly></textarea>
         </div>
     </div>
-    <div class="options-delete">
-        <p style="margin-bottom: 0px !important;">Удалить: </p>
 
-        <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="deleteDiv" class="styled-checkbox" checked><code>&lt;div
-            class="example-title"&gt;Пример&lt;/div&gt</code></p>
-        <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="em" class="styled-checkbox" checked><code>&lt;em> (курсив)</code></p>
-        <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="DivClean" class="styled-checkbox"
-                checked>Очистить стили у всех <code>&lt;div></code> <span style="font-size: 13px;">(кроме видео)</span> </p>
-        
 
-    </div>
 
-    
-    <button class="fortune-button">🔮</button>
+
+
+    <button class="fortune-button"><img src="./images/icon_A_fortune-telling_ball.svg" alt="Шар предсказаний"
+            width="35"></button>
     <div class="fortune-text" id="fortuneText"></div>
-    
-    
+
+
     <script>
-        const emojis = ['🐵', '🐒', '🦍', '🦧', '🐶', '🐕', '🦮', '🐕‍🦺', '🐩', '🐺', '🦊', '🦝', '🐱', '🐈', '🐈‍⬛', '🦁', '🐯', '🐅', '🐆', '🐴', '🫎', '🫏', '🐎', '🦄', '🦓', '🦌', '🦬', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒', '🐘', '🦣', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿️', '🦫', '🦔', '🦇', '🐻', '🐻‍❄️', '🐨', '🐼', '🦥', '🦦', '🦨', '🦘', '🦡', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊️', '🦅', '🦆', '🦢', '🦉', '🦤', '🦩', '🦚', '🦜', '🐦‍⬛', '🪿', '🐦‍🔥', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🦕', '🦖', '🐳', '🐋', '🐬', '🦭', '🐟', '🐠', '🐡', '🦈', '🐙', '🐚', '🪼', '🐌', '🦋', '🐛', '🐜', '🐝', '🪲', '🐞', '🦗', '🪳', '🕷️', '🕸️', '🦂', '🦟', '🪰', '🪱', '🦠', '💐', '🌸', '💮', '🪷', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🪻', '🌱', '🪴', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🪹', '🪺', '🍄','🍞', '🥐', '🥨', '🥑', '🥕', '🌶️','👽'];
+        const emojis = ['🐵', '🐒', '🦍', '🦧', '🐶', '🐕', '🦮', '🐕‍🦺', '🐩', '🐺', '🦊', '🦝', '🐱', '🐈', '🐈‍⬛', '🦁', '🐯', '🐅', '🐆', '🐴', '🫎', '🫏', '🐎', '🦄', '🦓', '🦌', '🦬', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒', '🐘', '🦣', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿️', '🦫', '🦔', '🦇', '🐻', '🐻‍❄️', '🐨', '🐼', '🦥', '🦦', '🦨', '🦘', '🦡', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊️', '🦅', '🦆', '🦢', '🦉', '🦤', '🦩', '🦚', '🦜', '🐦‍⬛', '🪿', '🐦‍🔥', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🦕', '🦖', '🐳', '🐋', '🐬', '🦭', '🐟', '🐠', '🐡', '🦈', '🐙', '🐚', '🪼', '🐌', '🦋', '🐛', '🐜', '🐝', '🪲', '🐞', '🦗', '🪳', '🕷️', '🕸️', '🦂', '🦟', '🪰', '🪱', '🦠', '💐', '🌸', '💮', '🪷', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🪻', '🌱', '🪴', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🪹', '🪺', '🍄', '🍞', '🥐', '🥨', '🥑', '🥕', '🌶️', '👽'];
 
         const button = document.querySelector('.fortune-button');
         const textDiv = document.getElementById('fortuneText');
 
         button.addEventListener('click', () => {
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                textDiv.innerHTML = `Кто ты сегодня: <span class="big-emoji">${randomEmoji}</span>`;
-                textDiv.style.display = 'block';
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            textDiv.innerHTML = `Кто ты сегодня: <span class="big-emoji">${randomEmoji}</span>`;
+            textDiv.style.display = 'block';
 
-                // Очищаем предыдущий таймер, если он существует
-                if (textDiv.timeoutId) {
-                    clearTimeout(textDiv.timeoutId);
-                }
+            // Очищаем предыдущий таймер, если он существует
+            if (textDiv.timeoutId) {
+                clearTimeout(textDiv.timeoutId);
+            }
 
-                // Запускаем новый таймер и сохраняем его ID
-                textDiv.timeoutId = setTimeout(() => {
-                    textDiv.style.display = 'none';
-                }, 3000);
-            });
+            // Запускаем новый таймер и сохраняем его ID
+            textDiv.timeoutId = setTimeout(() => {
+                textDiv.style.display = 'none';
+            }, 3000);
+        });
     </script>
 
     <script src="script.js"></script>
-    
-    
-    
+
+
+
 </body>
 
 </html>
