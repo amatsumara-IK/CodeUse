@@ -173,6 +173,13 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		`</div>`
 	);
 
+	inputText = processBlocks(
+		/<p>\s*(<br>\s*)?<strong>\s*\$code\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$code\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$code\s*(<br>\s*)?<\/p>/,
+		/<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$end\s*(<br>\s*)?<\/p>/,
+		`<pre class="prettyprint"><code>`,
+		`</code></pre>`
+	);
+
 
 
 	// 1. Заменить <h1> на <p></p><div class="h1"> и </h1> на </div>
@@ -309,6 +316,8 @@ document.getElementById('transformButton').addEventListener('click', function() 
         </div>`
 	);
 
+
+
 	inputText = inputText.replace(
 		/<div\s+class="important\s+important-filled">([\s\S]*?)<\/div>/g,
 		`<div class="color-container container-flex blue-container">
@@ -379,12 +388,18 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	document.querySelectorAll("input[data-checkbox]").forEach((checkbox) => {
 		const checkboxName = checkbox.dataset.checkbox;
 		
-		if (checkboxName === "add_formulas") {
+		/* Скрыл чекбокс который оборачивал формулу в \(\) #формула
+		 if (checkboxName === "add_formulas") {
 			if (checkbox.checked) {
 				inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs, "<!-- ФОРМУЛА -->\n\\(\\)");
 			} else {
 				inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs, `<!-- ФОРМУЛА -->`);
 			}
+		} else */
+		if (checkboxName === "formulas_replace") {
+			if (checkbox.checked) {
+					inputText = inputText.replace(/\$\$([^$]+)\$\$/g, "\\($1\\)");
+			} 
 		} else if (checkboxName === "span-div") {
 			if (checkbox.checked) {
 				inputText = processBlocks(
@@ -476,11 +491,12 @@ document.getElementById('transformButton').addEventListener('click', function() 
 
 
 	// Замена формул
-	inputText = inputText.replace(
-		/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs,
-		`<!-- ФОРМУЛА -->`
-	  );
+	inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert: equation:.*?<\/span>.*?<\/p>/gs,
+		"<!-- ФОРМУЛА -->\n\\(\\)"
+	);
 	  
+
+	
 	
 	//Замена img в таблице
 	inputText = inputText.replace(/<td>\s*<p id="gdcalert\d+"[^>]*>.*?gd2md-html alert.*?<img src="([^"]+)"[^>]*>\s*<\/td>/gs,

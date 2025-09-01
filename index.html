@@ -28,9 +28,12 @@
         <div class="options">
             <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="main"
                     class="styled-checkbox" checked><span class="text-background">Обернуть код в main-block</span></p>
-            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="add_formulas"
-                    class="styled-checkbox" checked><span class="text-background">Добавить обертку <span
-                        class="text-strong-code">\(\)</span> под формулу</span></p>
+           <!-- Скрыл чекбокс который оборачивал формулу в \(\) #формула
+            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="add_formulas" class="styled-checkbox"
+                    checked><span class="text-background">Добавить обертку <span class="text-strong-code">\(\)</span> под
+                    формулу</span></p> -->
+            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="formulas_replace" class="styled-checkbox"
+                    checked><span class="text-background">Заменить <span class="text-strong-code">$$</span> на <span class="text-strong-code">\(\)</span> в формулах</span></p>
             <p style="margin-left: 28px !important; margin-top: 24px !important;"><span class="text-background">Изменить
                     <span class="text-strong-code">&lt;pre class=...></span></span>
                 <select class="select" data-select="pre-language" id="pre-language-select">
