@@ -84,7 +84,10 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			const endMatch = afterStartText.match(endPattern);
 			if (!endMatch) {
 				alert(`Не найден блок $end после ${startPattern}`);
-				return;
+				// просто добавляем исходный текст этого блока и идём дальше
+				resultText += inputText.slice(start, start + startMatch[0].length);
+				currentIndex = start + startMatch[0].length;
+				continue;
 			}
 
 			const end =
@@ -98,7 +101,13 @@ document.getElementById('transformButton').addEventListener('click', function() 
 			);
 
 			// Вставляем код внутрь replacementHtml и добавляем закрывающий тег
-			const newBlock = replacementHtml + codeBetween + closingTag;
+			//const newBlock = replacementHtml + codeBetween + closingTag;
+
+			// Удаляем <br> только внутри найденного блока
+			const cleaned = codeBetween.replace(/<br\s*\/?>/gi, "");
+			
+			// Оборачиваем очищенный блок
+			const newBlock = replacementHtml + cleaned + closingTag;
 
 			resultText += newBlock;
 
@@ -172,6 +181,15 @@ document.getElementById('transformButton').addEventListener('click', function() 
 		`<div class="term">`,
 		`</div>`
 	);
+
+	// Условие 4: $term (на вариант в одном абзаце когда)
+		inputText = processBlocks(
+		  /<p[^>]*>\s*\$term[\s\S]*?/,
+		  /\$end[\s\S]*?<\/p>/,
+		  `<div class="term">`,
+		  `</div>`
+		);
+		
 
 	inputText = processBlocks(
 		/<p>\s*(<br>\s*)?<strong>\s*\$code\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$code\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$code\s*(<br>\s*)?<\/p>/,
@@ -417,6 +435,25 @@ document.getElementById('transformButton').addEventListener('click', function() 
   `</div>
 </div>`
 );
+
+//  $imp (на вариант в одном абзаце когда)
+		inputText = processBlocks(
+		  /<p[^>]*>\s*\$imp[\s\S]*?/,
+		  /\$end[\s\S]*?<\/p>/,
+		  `<div class="color-container container-flex blue-container">
+			  <div class="container-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99581 3.99658C6.99581 6.20664 5.2042 7.99825 2.99414 7.99825C5.2042 7.99825 6.99581 9.78986 6.99581 11.9999C6.99581 9.78986 8.78741 7.99825 10.9975 7.99825C8.78741 7.99825 6.99581 6.20664 6.99581 3.99658Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0021 16.0017C18.0021 13.2392 15.7626 10.9996 13 10.9996C15.7626 10.9996 18.0021 8.76013 18.0021 5.99756C18.0021 8.76013 20.2416 10.9996 23.0042 10.9996C20.2416 10.9996 18.0021 13.2392 18.0021 16.0017Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9978 14.501C10.9978 16.711 9.20615 18.5026 6.99609 18.5026C9.20615 18.5026 10.9978 20.2942 10.9978 22.5043C10.9978 20.2942 12.7894 18.5026 14.9994 18.5026C12.7894 18.5026 10.9978 16.711 10.9978 14.501Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			  </div>
+		  <div>`,
+			`</div>
+		  </div>`
+		  );
+
+
 				inputText = processBlocks(
   /<p>\s*(<br>\s*)?<strong>\s*\$biblio\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$biblio\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$biblio\s*(<br>\s*)?<\/p>/,
   /<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$end\s*(<br>\s*)?<\/p>/,
@@ -450,6 +487,26 @@ document.getElementById('transformButton').addEventListener('click', function() 
   `</span>
 </div>`
 );
+
+//  $imp (на вариант в одном абзаце когда)
+		inputText = processBlocks(
+		  /<p[^>]*>\s*\$imp[\s\S]*?/,
+		  /\$end[\s\S]*?<\/p>/,
+		  `<div class="color-container container-flex blue-container">
+			  <div class="container-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M6.99581 3.99658C6.99581 6.20664 5.2042 7.99825 2.99414 7.99825C5.2042 7.99825 6.99581 9.78986 6.99581 11.9999C6.99581 9.78986 8.78741 7.99825 10.9975 7.99825C8.78741 7.99825 6.99581 6.20664 6.99581 3.99658Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0021 16.0017C18.0021 13.2392 15.7626 10.9996 13 10.9996C15.7626 10.9996 18.0021 8.76013 18.0021 5.99756C18.0021 8.76013 20.2416 10.9996 23.0042 10.9996C20.2416 10.9996 18.0021 13.2392 18.0021 16.0017Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9978 14.501C10.9978 16.711 9.20615 18.5026 6.99609 18.5026C9.20615 18.5026 10.9978 20.2942 10.9978 22.5043C10.9978 20.2942 12.7894 18.5026 14.9994 18.5026C12.7894 18.5026 10.9978 16.711 10.9978 14.501Z" stroke="#D1D0FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			  </div>
+		  <div>`,
+			`</div>
+		  </div>`
+		  );
+
+
+
 					inputText = processBlocks(
   /<p>\s*(<br>\s*)?<strong>\s*\$biblio\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$biblio\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$biblio\s*(<br>\s*)?<\/p>/,
   /<p>\s*(<br>\s*)?<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?<\/p>|<strong>\s*\$end\s*<\/strong>\s*(<br>\s*)?|<p>\s*(<br>\s*)?\$end\s*(<br>\s*)?<\/p>/,
@@ -502,14 +559,20 @@ document.getElementById('transformButton').addEventListener('click', function() 
 	inputText = inputText.replace(/<td>\s*<p id="gdcalert\d+"[^>]*>.*?gd2md-html alert.*?<img src="([^"]+)"[^>]*>\s*<\/td>/gs,
 	`<td>\n<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>\n</td>`);
 	  
-	//Замена img с тегом <p> снаружи
+	/* //Замена img с тегом <p> снаружи (Зажевывает текст внутри модуля)
 	inputText = inputText.replace(/(<p[^>]*>)\s*<p[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>(\s*<\/p>)/gs,
-	`<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
+	`<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`); */
 	  
 	//Замена img без <p> тега снаружи
 	inputText = inputText.replace(/<p id="gdcalert\d+"[^>]*>\s*<span[^>]*>[^<]*gd2md-html alert.*?<\/span>.*?<img src="([^"]+)"[^>]*>/gs,
 	`<figure class="img">\n<img src="" alt="img" width="">\n<p class="grey-text"></p>\n</figure>`);
 	  
+	// Находит блок: внешний <p>, внутри которого есть <p id="gdcalert..."> и <img>
+	// Заменяет всю конструкцию на <figure>
+	inputText = inputText.replace(
+		/<p[^>]*>\s*<p id="gdcalert\d+"[^>]*>[\s\S]*?<\/p>\s*<img src="([^"]+)"[^>]*>[\s\S]*?<\/p>/gs,
+		`<figure class="img">\n<img src="$1" alt="img">\n<p class="grey-text"></p>\n</figure>`
+	);
 	  
 
 
