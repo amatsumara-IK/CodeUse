@@ -230,7 +230,7 @@ button {
     position: relative;
     padding: 20px 24px;
     color: #EEF1EF !important;
-    background-color: #b50303;
+
     background-color: #1c60bf;
     border: none;
     border-radius: 12px;
@@ -251,7 +251,7 @@ button {
 }
 
 #transformButton:active {
-    background-color: #8d0202;
+    background-color: #134d9f;
     transform: scale(0.995);
     transition: all 0.05s ease;
 }
