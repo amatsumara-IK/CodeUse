@@ -12,17 +12,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/favicon/fav_coffe_1.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon/fav_coffe_1 копия.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles-winter.css">
 
     <title>CodeUse | SF</title>
-
+    <link rel="stylesheet" href="./snowFlakes/snow.min.css" >
+    
 
 </head>
 
 <body>
+    
+    
+    <!-- Кофейный вариант
     <img id="img_1" src="./images/Picture_1.svg" alt="img" width="">
-    <img id="img_2" src="./images/Picture_2.svg" alt="img" width="">
+    <img id="img_2" src="./images/Picture_2.svg" alt="img" width=""> -->
+    <img id="img_1" src="./images/Picture_1_winter.png" alt="img" width="">
+    <img id="img_2" src="./images/Picture_2_winter.png" alt="img" width="">
 
     <div class="all-options">
         <div class="options">
@@ -57,7 +63,7 @@
         </div>
 
         <div class="options-delete">
-            <p style="margin-bottom: 0px !important; font-size: 17px;">Удалить: </p>
+            <p style="margin-bottom: 0px !important; font-size: 17px;"><strong>Удалить:</strong> </p>
 
             <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="deleteDiv"
                     class="styled-checkbox" checked><span class="text-background"><span class="text-strong-code">&lt;div
@@ -120,7 +126,11 @@
     </script>
 
     <script src="script.js"></script>
-
+    <script src="./snowFlakes/Snow.js"></script>
+    <script>
+        new Snow();
+    </script>
+   
 
 
 </body>
