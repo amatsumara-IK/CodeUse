@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeUse | SF</title>
 
-    <link rel="icon" href="images/favicon/fav_coffe_1 копия.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon-mascot.svg" type="image/svg+xml">
+    <link rel="icon" href="images/favicon-mascot-32.png" type="image/png" sizes="32x32">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -747,12 +748,18 @@
             const KEY = 'theme';
             const buttons = document.querySelectorAll('.theme-btn[data-theme-choice]');
 
+            const FAV_LIGHT = 'images/favicon-mascot.svg';
+            const FAV_DARK = 'images/favicon-mascot-dark.svg';
+            const favIcon = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+            const mqDark = window.matchMedia('(prefers-color-scheme: dark)');
             function apply(choice) {
+                const darkNow = choice === 'dark' || (choice !== 'light' && mqDark.matches);
                 if (choice === 'light' || choice === 'dark') {
                     root.setAttribute('data-theme', choice);
                 } else {
                     root.removeAttribute('data-theme');
                 }
+                if (favIcon) favIcon.href = darkNow ? FAV_DARK : FAV_LIGHT;
                 buttons.forEach(b => {
                     const active = b.dataset.themeChoice === choice;
                     b.classList.toggle('theme-btn--active', active);
@@ -765,6 +772,11 @@
                 saved = 'system';
             }
             apply(saved);
+
+            mqDark.addEventListener('change', function () {
+                const c = localStorage.getItem(KEY) || 'system';
+                if (c !== 'light' && c !== 'dark') apply('system');
+            });
 
             buttons.forEach(b => b.addEventListener('click', () => {
                 const choice = b.dataset.themeChoice;
