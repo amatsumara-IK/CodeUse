@@ -1,0 +1,1032 @@
+/* ============================================================================
+   CodeUse | SF — UI
+   Палитра и шкала токенов построены на основе опенсорс-дизайн-системы
+   Astryx (facebook/astryx), тема «matcha»: тёплая земляная зелень + бумажный
+   фон. Стиль поверхности — плоский app-frame: тонкие волосяные линии вместо
+   карточек и теней, один акцент, моноширинные редакторские метки.
+   Логика преобразования кода (script.js) стилями не затрагивается.
+   ============================================================================ */
+
+
+/* ----------------------------------------------------------------------------
+   Шрифты
+   ---------------------------------------------------------------------------- */
+
+@font-face {
+    font-family: 'JetBrainsMono';
+    src: url('JetBrainsMono.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Токены — светлая тема
+   ---------------------------------------------------------------------------- */
+
+:root {
+    color-scheme: light;
+
+    /* Поверхности */
+    --bg: #F2F2EB;
+    --surface: #FBFBF7;
+    --surface-2: #F5F5EE;
+
+    /* Текст */
+    --ink: #191C10;
+    --ink-2: #565D42;
+    --ink-3: #8B9276;
+
+    /* Линии */
+    --line: #E0E1D4;
+    --line-strong: #C6C9B4;
+
+    /* Акцент (matcha) */
+    --accent: #35401A;
+    --accent-hover: #27300F;
+    --accent-contrast: #F4F6E8;
+    --accent-soft: #EAEDDB;
+
+    /* Радиусы */
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 14px;
+
+    /* Шрифты */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrainsMono', 'SF Mono', Monaco, Consolas, monospace;
+
+    /* Шеврон селекта */
+    --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23565D42' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+
+/* ----------------------------------------------------------------------------
+   Токены — тёмная тема (явный выбор «Тёмная»): нейтральный графит
+   ---------------------------------------------------------------------------- */
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #111111;
+    --surface: #1A1A1A;
+    --surface-2: #212121;
+
+    --ink: #EDEDEA;
+    --ink-2: #A3A39E;
+    --ink-3: #71716C;
+
+    --line: #262626;
+    --line-strong: #3B3B3B;
+
+    --accent: #E9E9E4;
+    --accent-hover: #F8F8F5;
+    --accent-contrast: #161616;
+    --accent-soft: #262626;
+
+    --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23A3A39E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* ----------------------------------------------------------------------------
+   Токены — тёмная тема (системная, пока не выбрана вручную)
+   ---------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+
+        --bg: #111111;
+        --surface: #1A1A1A;
+        --surface-2: #212121;
+
+        --ink: #EDEDEA;
+        --ink-2: #A3A39E;
+        --ink-3: #71716C;
+
+        --line: #262626;
+        --line-strong: #3B3B3B;
+
+        --accent: #E9E9E4;
+        --accent-hover: #F8F8F5;
+        --accent-contrast: #161616;
+        --accent-soft: #262626;
+
+        --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23A3A39E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+   База
+   ---------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    word-break: break-word;
+}
+
+::selection {
+    background: var(--ink);
+    color: var(--bg);
+}
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: var(--radius-s);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Каркас
+   ---------------------------------------------------------------------------- */
+
+.shell {
+    max-width: 1240px;
+    min-height: calc(100vh - 60px);
+    min-height: calc(100svh - 60px - env(safe-area-inset-bottom, 0px));
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 48px);
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Верхняя панель
+   ---------------------------------------------------------------------------- */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 2px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+.brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.brand-sf {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-s);
+    padding: 2px 6px;
+}
+
+/* ----------------------------------------------------------------------------
+   Переключатель темы: системная / светлая / тёмная
+   ---------------------------------------------------------------------------- */
+
+.theme-switch {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+}
+
+.theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+    color: var(--ink-3);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.theme-btn:hover {
+    color: var(--ink);
+}
+
+.theme-btn--active,
+.theme-btn--active:hover {
+    background: var(--ink);
+    color: var(--bg);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Полоса с кнопкой преобразования (между «Входом» и «Выходом»)
+   ---------------------------------------------------------------------------- */
+
+.transform-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+button#transformButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 250px;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 36px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: var(--accent-contrast);
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-full, 999px);
+    cursor: pointer;
+    transition: background-color 120ms ease, transform 120ms ease;
+}
+
+button#transformButton:hover {
+    background: var(--accent-hover);
+}
+
+button#transformButton:active {
+    transform: translateY(1px);
+}
+
+button#transformButton svg {
+    transition: transform 120ms ease;
+}
+
+button#transformButton:hover svg {
+    transform: translateX(2px);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Рамка приложения: рель настроек + панели ввода/вывода
+   ---------------------------------------------------------------------------- */
+
+.frame {
+    display: grid;
+    grid-template-columns: 304px minmax(0, 1fr);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    flex: 1 1 auto;
+    margin-bottom: 14px;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Рель настроек
+   ---------------------------------------------------------------------------- */
+
+.rail {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    padding: 26px 24px;
+    border-right: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.rail-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.rail-title {
+    margin: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--line);
+}
+
+.switch-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.switch-label {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.switch-label:hover {
+    color: var(--ink-2);
+}
+
+.switch-note {
+    color: var(--ink-3);
+    font-size: 12px;
+}
+
+.switch-row--select {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.rail-spacer {
+    flex: 1 1 auto;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Тумблеры (input type=checkbox)
+   ---------------------------------------------------------------------------- */
+
+.styled-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 auto;
+    position: relative;
+    width: 30px;
+    height: 18px;
+    margin: 1px 0 0;
+    padding: 0;
+    cursor: pointer;
+    background: var(--line-strong);
+    border: none;
+    border-radius: var(--radius-full, 999px);
+    transition: background-color 140ms ease;
+}
+
+.styled-checkbox::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--surface);
+    transition: transform 140ms ease;
+}
+
+.styled-checkbox:checked {
+    background: var(--ink);
+}
+
+.styled-checkbox:checked::before {
+    transform: translateX(12px);
+    background: var(--surface);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Селект языка
+   ---------------------------------------------------------------------------- */
+
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 34px;
+    padding: 0 32px 0 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    color: var(--ink);
+    background-color: transparent;
+    background-image: var(--select-chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-s);
+    cursor: pointer;
+    transition: border-color 120ms ease;
+}
+
+.select:hover {
+    border-color: var(--ink-3);
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--ink);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Инлайн-код в подписях
+   ---------------------------------------------------------------------------- */
+
+.text-strong-code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-2);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Панели ввода и вывода
+   ---------------------------------------------------------------------------- */
+
+.panes {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 50%;
+    min-height: 0;
+}
+
+.pane + .pane {
+    border-top: 1px solid var(--line);
+}
+
+.pane-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.pane-output .pane-head {
+    background: var(--surface-2);
+}
+
+.pane-index {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    transition: color 120ms ease;
+}
+
+.pane-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+
+.pane-tag {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    color: var(--ink-3);
+}
+
+.pane:focus-within .pane-index {
+    color: var(--accent);
+}
+
+.pane:focus-within .pane-head {
+    border-bottom-color: var(--line-strong);
+}
+
+
+/* ----------------------------------------------------------------------------
+   Textarea
+   ---------------------------------------------------------------------------- */
+
+textarea {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 230px;
+    height: 34vh;
+    padding: 16px 18px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    resize: vertical;
+    tab-size: 4;
+}
+
+.pane-output textarea {
+    background: var(--surface-2);
+    cursor: default;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+textarea::placeholder {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-3);
+}
+
+textarea::-webkit-scrollbar {
+    width: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Статусная строка
+   ---------------------------------------------------------------------------- */
+
+.statusline {
+    display: flex;
+    align-items: center;
+    min-height: calc(60px + env(safe-area-inset-bottom, 0px));
+    padding: 0 calc(18px + env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(70px + env(safe-area-inset-left, 0px));
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.3px;
+    color: var(--ink-3);
+}
+
+.statusline-note {
+    margin-left: auto;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Шар предсказаний (пасхалка)
+   ---------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------
+   Маскот-кнопка и оракул (матрица символов)
+   ---------------------------------------------------------------------------- */
+
+.mascot-button {
+    position: fixed;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    left: calc(18px + env(safe-area-inset-left, 0px));
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.mascot-button:hover {
+    border-color: var(--ink-3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.mascot-button:active {
+    transform: scale(0.95);
+}
+
+.mascot-button.mascot-button--open {
+    border-color: var(--ink-2);
+}
+
+.mascot-svg {
+    display: block;
+}
+
+.mascot-svg .mark {
+    fill: var(--surface);
+}
+
+.oracle-popup {
+    position: fixed;
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    left: calc(18px + env(safe-area-inset-left, 0px));
+    max-width: calc(100vw - 24px);
+    z-index: 50;
+    width: 274px;
+    background: #070B07;
+    border: 1px solid #1D2C1E;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.97);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+}
+
+.oracle-popup.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.oracle-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-bottom: 1px solid #142014;
+}
+
+.oracle-dots {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.oracle-dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1C4A2C;
+}
+
+.oracle-dots i:first-child {
+    background: #2FA363;
+}
+
+.oracle-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: #4E8F68;
+}
+
+.oracle-close {
+    margin-left: auto;
+    padding: 0 2px;
+    background: none;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1;
+    color: #3E7052;
+    cursor: pointer;
+    transition: color 120ms ease;
+}
+
+.oracle-close:hover {
+    color: #A6E8C0;
+}
+
+#oracleCanvas {
+    display: block;
+    margin: 8px auto 2px;
+}
+
+.oracle-caption {
+    min-height: 26px;
+    padding: 0 12px 10px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    color: #6FCF97;
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.oracle-caption.show {
+    opacity: 1;
+}
+
+
+/* ----------------------------------------------------------------------------
+   «Удалить страницу?» — поповер и сценарий уничтожения
+   ---------------------------------------------------------------------------- */
+
+.nuke-link {
+    flex: 0 0 auto;
+    padding: 6px 4px;
+    background: none;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: color 120ms ease;
+}
+
+.nuke-link:hover {
+    color: #C0554F;
+}
+
+.nuke-pop {
+    position: fixed;
+    left: 70px;
+    bottom: 60px;
+    z-index: 50;
+    display: none;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-m);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.nuke-pop.open {
+    display: block;
+}
+
+.nuke-pop-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.nuke-pop-actions {
+    display: flex;
+    gap: 8px;
+}
+
+button.nuke-yes,
+button.nuke-no {
+    padding: 8px 14px;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    font-weight: 600;
+    border-radius: var(--radius-full, 999px);
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+button.nuke-yes {
+    background: #B3402F;
+    color: #FFFFFF;
+    border: none;
+}
+
+button.nuke-yes:hover {
+    background: #96331F;
+}
+
+button.nuke-no {
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+}
+
+button.nuke-no:hover {
+    color: var(--ink);
+    border-color: var(--ink-3);
+}
+
+.nuke-cat {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 900ms ease;
+    pointer-events: none;
+}
+
+.nuke-cat.show {
+    display: flex;
+    opacity: 1;
+}
+
+.nuke-cat.fade {
+    opacity: 0;
+    transition: opacity 1200ms ease;
+}
+
+.nuke-cat img {
+    max-width: min(520px, 80vw);
+    border-radius: 8px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+#nukeCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    pointer-events: none;
+    display: none;
+}
+
+
+/* ----------------------------------------------------------------------------
+   Toast «скопировано»
+   ---------------------------------------------------------------------------- */
+
+.toast {
+    position: fixed;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    z-index: 30;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.4px;
+    color: var(--bg);
+    background: var(--ink);
+    border-radius: var(--radius-s);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 8px);
+    transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+}
+
+.toast--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+   Адаптивность
+   ---------------------------------------------------------------------------- */
+
+/* Узкий десктоп: панель настроек компактнее */
+@media (max-width: 1240px) {
+    .frame {
+        grid-template-columns: 280px minmax(0, 1fr);
+    }
+
+    .rail {
+        padding: 22px 20px;
+    }
+}
+
+/* Низкие окна: редакторы пониже */
+@media (min-width: 901px) and (max-height: 840px) {
+    textarea {
+        height: 30vh;
+        min-height: 190px;
+    }
+}
+
+@media (max-width: 900px) {
+    .frame {
+        grid-template-columns: 1fr;
+    }
+
+    .rail {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+}
+
+@media (max-width: 560px) {
+    .topbar {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 2px;
+    }
+
+    .rail {
+        padding: 18px 16px;
+    }
+
+    /* 16px — чтобы iOS не зумил поле при фокусе */
+    textarea {
+        min-height: 170px;
+        height: 30vh;
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+
+    .transform-bar {
+        padding: 8px 10px 8px 62px;
+    }
+
+    button#transformButton {
+        width: 100%;
+    }
+
+    .statusline-note {
+        display: none;
+    }
+
+    .statusline {
+        padding-left: calc(70px + env(safe-area-inset-left, 0px));
+    }
+}
+
+/* Тач-устройства: крупнее тумблеры и переключатель темы */
+@media (pointer: coarse) {
+    .styled-checkbox {
+        width: 36px;
+        height: 21px;
+    }
+
+    .styled-checkbox::before {
+        top: 2.5px;
+        left: 2.5px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .styled-checkbox:checked::before {
+        transform: translateX(15px);
+    }
+
+    .theme-btn {
+        width: 36px;
+        height: 32px;
+    }
+
+    .switch-row {
+        padding: 9px 0;
+    }
+}
+/* ----------------------------------------------------------------------------
+   Доступность: уменьшенная анимация
+   ---------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

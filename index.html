@@ -1,146 +1,1062 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cygre Light:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
-<!-- https://coolors.co/1c2321-7d98a1-5e6572-a9b4c2-eef1ef  -->
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/favicon/fav_coffe_1 копия.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles-winter.css">
-
     <title>CodeUse | SF</title>
-    <link rel="stylesheet" href="./snowFlakes/snow.min.css" >
-    
 
+    <link rel="icon" href="images/favicon/fav_coffe_1 копия.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles-astryx.css?v=9">
+
+    <script>
+        // Применяем сохранённую тему до первой отрисовки, чтобы не было вспышки.
+        (function () {
+            var t = localStorage.getItem('theme');
+            if (t === 'light' || t === 'dark') {
+                document.documentElement.setAttribute('data-theme', t);
+            }
+        })();
+    </script>
 </head>
 
 <body>
-    
-    
-    <!-- Кофейный вариант
-    <img id="img_1" src="./images/Picture_1.svg" alt="img" width="">
-    <img id="img_2" src="./images/Picture_2.svg" alt="img" width=""> -->
-    <img id="img_1" src="./images/Picture_1_winter.png" alt="img" width="">
-    <img id="img_2" src="./images/Picture_2_winter.png" alt="img" width="">
 
-    <div class="all-options">
-        <div class="options">
-            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="main"
-                    class="styled-checkbox" checked><span class="text-background">Обернуть код в main-block</span></p>
-           <!-- Скрыл чекбокс который оборачивал формулу в \(\) #формула
-            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="add_formulas" class="styled-checkbox"
-                    checked><span class="text-background">Добавить обертку <span class="text-strong-code">\(\)</span> под
-                    формулу</span></p> -->
-            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="formulas_replace" class="styled-checkbox"
-                    checked><span class="text-background">Заменить <span class="text-strong-code">$$</span> на <span class="text-strong-code">\(\)</span> в формулах</span></p>
-            <p style="margin-left: 28px !important; margin-top: 24px !important;"><span class="text-background">Изменить
-                    <span class="text-strong-code">&lt;pre class=...></span></span>
-                <select class="select" data-select="pre-language" id="pre-language-select">
-                    <option value="python">Python</option>
-                    <option value="java">Java</option>
-                    <option value="javascript">JS</option>
-                    <option value="cpp">C++</option>
-                    <option value="csharp">C#</option>
-                    <option value="justc">C</option>
-                    <option value="php">PHP</option>
-                    <option value="markup">HTML</option>
-                    <option value="notxexe">Default</option>
-                </select>
-            </p>
+    <div class="shell">
 
-            <p style="margin-bottom: 0px !important;"><input type="checkbox" data-checkbox="span-div"
-                    class="styled-checkbox" checked><span class="text-background">Заменить <span
-                        class="text-strong-code">&lt;span></span> на <span class="text-strong-code">&lt;div></span>
-                    [imp|biblio]</span></p>
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-name">CodeUse</span>
+                <span class="brand-sf">SF</span>
+            </div>
+            <div class="theme-switch" role="group" aria-label="Тема оформления">                <button type="button" class="theme-btn" data-theme-choice="system" title="Как в системе"
+                    aria-label="Системная тема" aria-pressed="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <button type="button" class="theme-btn" data-theme-choice="light" title="Светлая"
+                    aria-label="Светлая тема" aria-pressed="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" />
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <button type="button" class="theme-btn" data-theme-choice="dark" title="Тёмная"
+                    aria-label="Тёмная тема" aria-pressed="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke="currentColor" stroke-width="1.8"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="frame">
+
+            <aside class="rail">
+                <div class="rail-group">
+                    <h2 class="rail-title">01 · Форматирование</h2>
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="main" id="cb-main" class="styled-checkbox" checked>
+                        <label class="switch-label" for="cb-main">Обернуть код в <span
+                                class="text-strong-code">main-block</span></label>
+                    </div>
+
+                    <!-- Скрыл чекбокс который оборачивал формулу в \(\) #формула
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="add_formulas" id="cb-add_formulas" class="styled-checkbox" checked>
+                        <label class="switch-label" for="cb-add_formulas">Добавить обертку <span class="text-strong-code">\(\)</span> под формулу</label>
+                    </div>
+                    -->
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="formulas_replace" id="cb-formulas_replace"
+                            class="styled-checkbox" checked>
+                        <label class="switch-label" for="cb-formulas_replace">Заменить <span
+                                class="text-strong-code">$$</span> на <span class="text-strong-code">\(\)</span> в
+                            формулах</label>
+                    </div>
+
+                    <div class="switch-row switch-row--select">
+                        <label class="switch-label" for="pre-language-select">Язык для <span
+                                class="text-strong-code">&lt;pre class=...&gt;</span></label>
+                        <select class="select" data-select="pre-language" id="pre-language-select">
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="javascript">JS</option>
+                            <option value="cpp">C++</option>
+                            <option value="csharp">C#</option>
+                            <option value="justc">C</option>
+                            <option value="php">PHP</option>
+                            <option value="markup">HTML</option>
+                            <option value="notxexe">Default</option>
+                        </select>
+                    </div>
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="span-div" id="cb-span-div" class="styled-checkbox"
+                            checked>
+                        <label class="switch-label" for="cb-span-div">Заменить <span
+                                class="text-strong-code">&lt;span&gt;</span> на <span
+                                class="text-strong-code">&lt;div&gt;</span> [imp|biblio]</label>
+                    </div>
+                </div>
+
+                <div class="rail-group">
+                    <h2 class="rail-title">02 · Удаление</h2>
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="deleteDiv" id="cb-deleteDiv" class="styled-checkbox"
+                            checked>
+                        <label class="switch-label" for="cb-deleteDiv"><span class="text-strong-code">&lt;div
+                                class="example-title"&gt;</span>Пример</label>
+                    </div>
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="em" id="cb-em" class="styled-checkbox" checked>
+                        <label class="switch-label" for="cb-em"><span class="text-strong-code">&lt;em&gt;</span>
+                            (курсив)</label>
+                    </div>
+
+                    <div class="switch-row">
+                        <input type="checkbox" data-checkbox="DivClean" id="cb-DivClean" class="styled-checkbox"
+                            checked>
+                        <label class="switch-label" for="cb-DivClean">Стили у всех <span
+                                class="text-strong-code">&lt;div&gt;</span> <span class="switch-note">(кроме
+                                видео)</span></label>
+                    </div>
+                </div>
+
+                <div class="rail-spacer"></div>
+            </aside>
+
+            <section class="panes">
+
+                <section class="pane">
+                    <div class="pane-head">
+                        <span class="pane-index">01</span>
+                        <span class="pane-label">Вход</span>
+                        <span class="pane-tag">html</span>
+                    </div>
+                    <textarea id="inputText" class="work-area" placeholder="Вставьте исходный код…"
+                        spellcheck="false"></textarea>
+                </section>
+
+                <div class="transform-bar">
+                    <button id="transformButton">
+                        Преобразовать код
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <section class="pane pane-output">
+                    <div class="pane-head">
+                        <span class="pane-index">02</span>
+                        <span class="pane-label">Выход</span>
+                        <span class="pane-tag">буфер обмена</span>
+                    </div>
+                    <textarea id="outputText" readonly spellcheck="false"></textarea>
+                </section>
+
+            </section>
 
         </div>
 
-        <div class="options-delete">
-            <p style="margin-bottom: 0px !important; font-size: 17px;"><strong>Удалить:</strong> </p>
+    </div>
 
-            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="deleteDiv"
-                    class="styled-checkbox" checked><span class="text-background"><span class="text-strong-code">&lt;div
-                        class="example-title"&gt;Пример&lt;/div&gt</span></span></p>
-            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="em" class="styled-checkbox"
-                    checked><span class="text-background"><span class="text-strong-code">&lt;em> (курсив)</span></span>
-            </p>
-            <p style="margin-top: 8px !important;"><input type="checkbox" data-checkbox="DivClean"
-                    class="styled-checkbox" checked><span class="text-background">Очистить стили у всех <span
-                        class="text-strong-code">&lt;div></span> <span class="text-strong-code"
-                        style="font-size: 13px !important; font-weight: lighter !important;">(кроме видео)</span></span>
-            </p>
+    <footer class="statusline">
+        <button class="nuke-link" id="nukeLink">Удалить страницу?</button>
+        <span class="statusline-note">преобразование · копирование — одним кликом</span>
+    </footer>
 
+    <button class="mascot-button" id="mascotButton" title="Оракул" aria-label="Оракул: случайный зверь из символов"
+        aria-expanded="false">
+        <svg class="mascot-svg" width="24" height="18" viewBox="0 0 24 18" shape-rendering="crispEdges"
+            aria-hidden="true">
+            <rect x="2" y="0" width="2" height="2" fill="currentColor" />
+            <rect x="20" y="0" width="2" height="2" fill="currentColor" />
+            <rect x="2" y="2" width="4" height="2" fill="currentColor" />
+            <rect x="18" y="2" width="4" height="2" fill="currentColor" />
+            <rect x="2" y="4" width="20" height="2" fill="currentColor" />
+            <rect x="2" y="6" width="20" height="2" fill="currentColor" />
+            <rect x="2" y="8" width="2" height="2" fill="currentColor" />
+            <rect x="8" y="8" width="8" height="2" fill="currentColor" />
+            <rect x="20" y="8" width="2" height="2" fill="currentColor" />
+            <rect x="4" y="8" width="4" height="2" class="mark" />
+            <rect x="16" y="8" width="4" height="2" class="mark" />
+            <rect x="2" y="10" width="20" height="2" fill="currentColor" />
+            <rect x="2" y="12" width="8" height="2" fill="currentColor" />
+            <rect x="14" y="12" width="8" height="2" fill="currentColor" />
+            <rect x="10" y="12" width="4" height="2" class="mark" />
+            <rect x="4" y="14" width="16" height="2" fill="currentColor" />
+            <rect x="6" y="16" width="12" height="2" fill="currentColor" />
+        </svg>
+    </button>
 
+    <div class="oracle-popup" id="oraclePopup" aria-hidden="true">
+        <div class="oracle-head">
+            <span class="oracle-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="oracle-title">oracle.matrix</span>
+            <button class="oracle-close" id="oracleClose" aria-label="Закрыть">✕</button>
+        </div>
+        <canvas id="oracleCanvas" width="232" height="190"></canvas>
+        <div class="oracle-caption" id="oracleCaption"></div>
+    </div>
+
+    <div class="toast" id="toast" role="status">Скопировано в буфер обмена</div>
+
+    <div class="nuke-pop" id="nukePop">
+        <p class="nuke-pop-title">Вы уверены?</p>
+        <div class="nuke-pop-actions">
+            <button class="nuke-yes" id="nukeYes">Да. 100%</button>
+            <button class="nuke-no" id="nukeNo">Нет, страшно</button>
         </div>
     </div>
 
-    <div class="container-text">
+    <div class="nuke-cat" id="nukeCat"><img src="images/nuke-cat.png" alt=""></div>
+    <canvas id="nukeCanvas"></canvas>
 
-        <textarea id="inputText" class="work-area" placeholder="Введите код здесь..."></textarea>
+    <script src="html2canvas.min.js"></script>
 
+            <script>
+        // Только UI: оракул — из падающих символов складывается цветной пиксель-арт 24×24.
+        // Логика преобразования целиком в script.js и не изменялась.
+        (function () {
+            const BTN = document.getElementById('mascotButton');
+            const POPUP = document.getElementById('oraclePopup');
+            const CANVAS = document.getElementById('oracleCanvas');
+            const CAPTION = document.getElementById('oracleCaption');
+            const CLOSE = document.getElementById('oracleClose');
+            const ctx = CANVAS.getContext('2d');
 
+            const GLYPHS = '01<>[]{}#$%&*+=?;:^~'.split('');
+            const CELL = 10;
+            const COLS = 24;
+            const W = 248;
+            const H = 240;
+            const dpr = window.devicePixelRatio || 1;
+            CANVAS.width = W * dpr;
+            CANVAS.height = H * dpr;
+            CANVAS.style.width = W + 'px';
+            CANVAS.style.height = H + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        <button id="transformButton">Преобразовать код</button>
-        <div class="output-container">
-            <textarea id="outputText" readonly></textarea>
-        </div>
-    </div>
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+            // Пиксель-арты: задана левая половина строки (12 из 24 колонок),
+            // правая зеркалится. '.' — пусто, остальные символы — ключ палитры.
+            const SPRITES = [
+                {
+                    name: 'Кот',
+                    pal: { '1': '#E8944A', '2': '#C06A2A', '3': '#F7E9D6', '4': '#E38080', '5': '#1F1F1F' },
+                    rows: [
+                        '.11.........',
+                        '.111........',
+                        '.1111.......',
+                        '.1141.......',
+                        '.1144.......',
+                        '.1111122111.',
+                        '.1111122111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1113333333.',
+                        '.1113333333.',
+                        '.1113333334.',
+                        '.1113333334.',
+                        '.1113333333.',
+                        '..113333333.',
+                        '...11333333.',
+                        '....1111111.',
+                        '.....1111111',
+                        '......111111',
+                    ],
+                },
+                {
+                    name: 'Пёс',
+                    pal: { '1': '#B5854F', '2': '#77533A', '3': '#EFE3CE', '4': '#E08383', '5': '#1F1F1F' },
+                    rows: [
+                        '.22.........',
+                        '.221........',
+                        '.2211111111.',
+                        '.2211111111.',
+                        '.2211111111.',
+                        '.2211111111.',
+                        '.2255111111.',
+                        '.2255111111.',
+                        '.2211111111.',
+                        '.2211111111.',
+                        '..113333333.',
+                        '..113333333.',
+                        '..1133333355',
+                        '..1133333355',
+                        '..113333333.',
+                        '...133333344',
+                        '...133333344',
+                        '....13333333',
+                        '.....1333333',
+                        '......133333',
+                        '......111111',
+                    ],
+                },
+                {
+                    name: 'Лиса',
+                    pal: { '1': '#E07B39', '3': '#F6E7D3', '5': '#262626' },
+                    rows: [
+                        '.11.........',
+                        '.111........',
+                        '.1331.......',
+                        '.1333.......',
+                        '.13311......',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1111111111.',
+                        '.1333333333.',
+                        '.1333333333.',
+                        '.1333333333.',
+                        '.1333333335.',
+                        '.1333333335.',
+                        '..333333333.',
+                        '...33333333.',
+                        '....3333333.',
+                        '.....333333.',
+                        '......33333.',
+                    ],
+                },
+                {
+                    name: 'Сова',
+                    pal: { '1': '#8A6D4B', '3': '#DECCA4', '4': '#E09A3C', '5': '#1E1E1E' },
+                    rows: [
+                        '.11.........',
+                        '.111........',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1133333333.',
+                        '.1133333333.',
+                        '.1133355333.',
+                        '.1133355333.',
+                        '.1133355333.',
+                        '.1133355333.',
+                        '.1133333333.',
+                        '.1133333344.',
+                        '.1133333334.',
+                        '.1133333333.',
+                        '.1133333333.',
+                        '.1133333333.',
+                        '.1111333333.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '..111111111.',
+                        '...11111111.',
+                        '....1111111.',
+                    ],
+                },
+                {
+                    name: 'Лягушка',
+                    pal: { '1': '#63A955', '2': '#3F7A38', '3': '#D8ECC0', '5': '#20261C' },
+                    rows: [
+                        '..1111......',
+                        '.113311.....',
+                        '.113531.....',
+                        '.113531.....',
+                        '.111111.....',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1121111111.',
+                        '.1111111111.',
+                        '.1111121111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1222222222.',
+                        '.1111111111.',
+                        '..113333333.',
+                        '...13333333.',
+                        '...13333333.',
+                        '....1333333.',
+                        '.....133333.',
+                        '.....111111.',
+                        '......111111',
+                    ],
+                },
+                {
+                    name: 'Панда',
+                    pal: { '1': '#F2F2EE', '2': '#262626', '3': '#F2F2EE' },
+                    rows: [
+                        '.22.........',
+                        '.222........',
+                        '.2222.......',
+                        '.2221111111.',
+                        '.2211111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1222211111.',
+                        '.1222221111.',
+                        '.1223321111.',
+                        '.1223321111.',
+                        '.1222221111.',
+                        '.1222211111.',
+                        '.1111111111.',
+                        '.1111111112.',
+                        '.1111111112.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '..111111111.',
+                        '...11111111.',
+                        '....1111111.',
+                        '.....111111.',
+                    ],
+                },
+                {
+                    name: 'Кролик',
+                    pal: { '1': '#C9CBD6', '4': '#EFB7C0', '5': '#262626' },
+                    rows: [
+                        '..11........',
+                        '..141.......',
+                        '..141.......',
+                        '..141.......',
+                        '..141.......',
+                        '..141.......',
+                        '..111.......',
+                        '..111.......',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1111111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1155111111.',
+                        '.1111111111.',
+                        '.1111111114.',
+                        '.1113333333.',
+                        '.1113333333.',
+                        '..113333333.',
+                        '...13333333.',
+                        '....1111111.',
+                        '.....111111.',
+                        '......111111',
+                    ],
+                },
+                {
+                    name: 'Робот',
+                    pal: { '1': '#9AA7B5', '2': '#4E5A66', '3': '#8FE3E0', '4': '#E06C6C' },
+                    rows: [
+                        '...........4',
+                        '...........4',
+                        '...........1',
+                        '...........1',
+                        '...111111111',
+                        '...122222222',
+                        '...123322222',
+                        '...123322222',
+                        '...122222222',
+                        '...122222222',
+                        '...111111111',
+                        '...121212121',
+                        '...111111111',
+                        '...121212121',
+                        '...111111111',
+                        '....11111111',
+                        '....11111111',
+                    ],
+                },
+                {
+                    name: 'Монстр',
+                    pal: { '1': '#A06DE0', '2': '#3A2354', '3': '#F4F7FF', '5': '#1E1E1E' },
+                    rows: [
+                        '.11.........',
+                        '.111........',
+                        '.111..111111',
+                        '.11111111111',
+                        '.11111111111',
+                        '.11111111111',
+                        '.11133333333',
+                        '.11133333333',
+                        '.11133333355',
+                        '.11133333355',
+                        '.11133333355',
+                        '.11133333333',
+                        '.11133333333',
+                        '.11111111111',
+                        '.11111111111',
+                        '.11122222222',
+                        '.11122222222',
+                        '.11332233222',
+                        '.11111111111',
+                        '..1111111111',
+                        '...11111111.',
+                    ],
+                },
+                {
+                    name: 'Призрак',
+                    pal: { '1': '#E9EDF4', '2': '#39415A', '5': '#20242E' },
+                    rows: [
+                        '......111111',
+                        '....11111111',
+                        '...111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1155511111',
+                        '..1155511111',
+                        '..1155511111',
+                        '..1155511111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111122',
+                        '..1111111122',
+                        '..1111111122',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..1111111111',
+                        '..11.1111.11',
+                    ],
+                },
+            ];
 
+            let rafId = null;
+            let running = false;
+            let isOpen = false;
+            let drops = [];
+            let cells = [];
+            let startAt = 0;
+            let finished = false;
+            let currentName = '';
+            let lastIdx = -1;
 
-
-
-    <!-- <button class="fortune-button"><img src="./images/icon_A_fortune-telling_ball.svg" alt="Шар предсказаний"
-            width="35"></button> -->
-    <button class="fortune-button"><img src="./images/a-snowman-with-a-blue-hat-and-scarf-png.png" alt="snowman"
-            width="38"></button>
-    <div class="fortune-text" id="fortuneText"></div>
-
-
-    <script>
-        const emojis = ['🐵', '🐒', '🦍', '🦧', '🐶', '🐕', '🦮', '🐕‍🦺', '🐩', '🐺', '🦊', '🦝', '🐱', '🐈', '🐈‍⬛', '🦁', '🐯', '🐅', '🐆', '🐴', '🫎', '🫏', '🐎', '🦄', '🦓', '🦌', '🦬', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒', '🐘', '🦣', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿️', '🦫', '🦔', '🦇', '🐻', '🐻‍❄️', '🐨', '🐼', '🦥', '🦦', '🦨', '🦘', '🦡', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊️', '🦅', '🦆', '🦢', '🦉', '🦤', '🦩', '🦚', '🦜', '🐦‍⬛', '🪿', '🐦‍🔥', '🐸', '🐊', '🐢', '🦎', '🐍', '🐲', '🐉', '🦕', '🦖', '🐳', '🐋', '🐬', '🦭', '🐟', '🐠', '🐡', '🦈', '🐙', '🐚', '🪼', '🐌', '🦋', '🐛', '🐜', '🐝', '🪲', '🐞', '🦗', '🪳', '🕷️', '🕸️', '🦂', '🦟', '🪰', '🪱', '🦠', '💐', '🌸', '💮', '🪷', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🪻', '🌱', '🪴', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🪹', '🪺', '🍄', '🍞', '🥐', '🥨', '🥑', '🥕', '🌶️', '👽'];
-
-        const button = document.querySelector('.fortune-button');
-        const textDiv = document.getElementById('fortuneText');
-
-        button.addEventListener('click', () => {
-            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            textDiv.innerHTML = `Кто ты сегодня: <span class="big-emoji">${randomEmoji}</span>`;
-            textDiv.style.display = 'block';
-
-            // Очищаем предыдущий таймер, если он существует
-            if (textDiv.timeoutId) {
-                clearTimeout(textDiv.timeoutId);
+            function pickSprite() {
+                let i;
+                do {
+                    i = Math.floor(Math.random() * SPRITES.length);
+                } while (SPRITES.length > 1 && i === lastIdx);
+                lastIdx = i;
+                return SPRITES[i];
             }
 
-            // Запускаем новый таймер и сохраняем его ID
-            textDiv.timeoutId = setTimeout(() => {
-                textDiv.style.display = 'none';
-            }, 3000);
-        });
+            function buildCells(sprite) {
+                cells = [];
+                const offX = Math.floor((W - COLS * CELL) / 2);
+                const offY = Math.floor((H - sprite.rows.length * CELL) / 2);
+                for (let r = 0; r < sprite.rows.length; r++) {
+                    const half = sprite.rows[r];
+                    const full = half + half.split('').reverse().join('');
+                    for (let c = 0; c < COLS; c++) {
+                        const ch = full[c];
+                        if (!ch || ch === '.') continue;
+                        cells.push({
+                            x: offX + c * CELL,
+                            y: offY + r * CELL,
+                            col: sprite.pal[ch] || '#60E790',
+                            ch: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+                            flick: Math.random() < 0.10,
+                            seed: Math.random() * 1000,
+                            delay: 600 + Math.random() * 3600,
+                            on: false,
+                            flashUntil: 0,
+                        });
+                    }
+                }
+            }
+
+            function initDrops() {
+                drops = [];
+                for (let x = 4; x < W; x += 9) {
+                    drops.push({ x: x, y: Math.random() * -H, v: 1.4 + Math.random() * 2.6 });
+                }
+            }
+
+            function drawRain() {
+                ctx.font = '10px "JetBrainsMono", monospace';
+                for (const d of drops) {
+                    d.y += d.v;
+                    if (d.y > H + 14) {
+                        d.y = -10 - Math.random() * 60;
+                        d.v = 1.4 + Math.random() * 2.6;
+                    }
+                    ctx.fillStyle = 'rgba(72, 200, 120, 0.45)';
+                    ctx.fillText(GLYPHS[Math.floor(Math.random() * GLYPHS.length)], d.x, d.y);
+                }
+            }
+
+            function drawCells(now) {
+                ctx.font = 'bold 9px "JetBrainsMono", monospace';
+                let allOn = true;
+                for (const cell of cells) {
+                    if (!cell.on) {
+                        if (now - startAt >= cell.delay) {
+                            cell.on = true;
+                            cell.flashUntil = now + 280;
+                        } else {
+                            allOn = false;
+                            continue;
+                        }
+                    }
+                    let ch = cell.ch;
+                    if (cell.flick) {
+                        const step = Math.floor(now / 300) + Math.floor(cell.seed);
+                        ch = GLYPHS[step % GLYPHS.length];
+                    }
+                    if (now < cell.flashUntil) {
+                        ctx.globalAlpha = 1;
+                        ctx.fillStyle = '#F2FFF6';
+                    } else {
+                        ctx.globalAlpha = 0.72 + 0.28 * Math.sin(now / 420 + cell.seed);
+                        ctx.fillStyle = cell.col;
+                    }
+                    ctx.fillText(ch, cell.x + 2, cell.y + 8);
+                }
+                ctx.globalAlpha = 1;
+                return allOn;
+            }
+
+            function loop(now) {
+                ctx.fillStyle = 'rgba(5, 9, 5, 0.10)';
+                ctx.fillRect(0, 0, W, H);
+                drawRain();
+                const allOn = drawCells(now);
+                if (allOn && !finished) {
+                    finished = true;
+                    CAPTION.textContent = '> сформировано: ' + currentName.toUpperCase();
+                    CAPTION.classList.add('show');
+                }
+                rafId = requestAnimationFrame(loop);
+            }
+
+            function drawStatic(sprite) {
+                ctx.fillStyle = '#050905';
+                ctx.fillRect(0, 0, W, H);
+                const offX = Math.floor((W - COLS * CELL) / 2);
+                const offY = Math.floor((H - sprite.rows.length * CELL) / 2);
+                ctx.font = 'bold 9px "JetBrainsMono", monospace';
+                for (let r = 0; r < sprite.rows.length; r++) {
+                    const half = sprite.rows[r];
+                    const full = half + half.split('').reverse().join('');
+                    for (let c = 0; c < COLS; c++) {
+                        const ch = full[c];
+                        if (!ch || ch === '.') continue;
+                        ctx.fillStyle = sprite.pal[ch] || '#60E790';
+                        ctx.fillText(ch, offX + c * CELL + 2, offY + r * CELL + 8);
+                    }
+                }
+                CAPTION.textContent = '> сформировано: ' + currentName.toUpperCase();
+                CAPTION.classList.add('show');
+            }
+
+            function start() {
+                const sprite = pickSprite();
+                currentName = sprite.name;
+                finished = false;
+                CAPTION.classList.remove('show');
+                CAPTION.textContent = '> формирование…';
+                ctx.fillStyle = '#050905';
+                ctx.fillRect(0, 0, W, H);
+                buildCells(sprite);
+                initDrops();
+                startAt = performance.now();
+                if (reduceMotion) {
+                    drawStatic(sprite);
+                    return;
+                }
+                if (!running) {
+                    running = true;
+                    rafId = requestAnimationFrame(loop);
+                }
+            }
+
+            function openPopup() {
+                isOpen = true;
+                POPUP.classList.add('open');
+                POPUP.setAttribute('aria-hidden', 'false');
+                BTN.classList.add('mascot-button--open');
+                BTN.setAttribute('aria-expanded', 'true');
+                start();
+            }
+
+            function closePopup() {
+                isOpen = false;
+                POPUP.classList.remove('open');
+                POPUP.setAttribute('aria-hidden', 'true');
+                BTN.classList.remove('mascot-button--open');
+                BTN.setAttribute('aria-expanded', 'false');
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+                running = false;
+            }
+
+            BTN.addEventListener('click', function () {
+                if (!isOpen) {
+                    openPopup();
+                } else {
+                    start();
+                }
+            });
+
+            CLOSE.addEventListener('click', closePopup);
+
+            document.addEventListener('mousedown', function (e) {
+                if (isOpen && !POPUP.contains(e.target) && !BTN.contains(e.target)) {
+                    closePopup();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && isOpen) {
+                    closePopup();
+                }
+            });
+        })();
     </script>
 
     <script src="script.js"></script>
-    <script src="./snowFlakes/Snow.js"></script>
+
     <script>
-        new Snow();
+        // Только UI: переключатель темы (системная / светлая / тёмная).
+        // Логика преобразования целиком в script.js и не изменялась.
+        (function () {
+            const root = document.documentElement;
+            const KEY = 'theme';
+            const buttons = document.querySelectorAll('.theme-btn[data-theme-choice]');
+
+            function apply(choice) {
+                if (choice === 'light' || choice === 'dark') {
+                    root.setAttribute('data-theme', choice);
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+                buttons.forEach(b => {
+                    const active = b.dataset.themeChoice === choice;
+                    b.classList.toggle('theme-btn--active', active);
+                    b.setAttribute('aria-pressed', String(active));
+                });
+            }
+
+            let saved = localStorage.getItem(KEY);
+            if (saved !== 'light' && saved !== 'dark' && saved !== 'system') {
+                saved = 'system';
+            }
+            apply(saved);
+
+            buttons.forEach(b => b.addEventListener('click', () => {
+                const choice = b.dataset.themeChoice;
+                localStorage.setItem(KEY, choice);
+                apply(choice);
+            }));
+        })();
+
+        // Только UI: уведомление об успешном копировании после преобразования.
+        // Логика преобразования целиком в script.js и не изменялась.
+        (function () {
+            const transformButton = document.getElementById('transformButton');
+            const toast = document.getElementById('toast');
+
+            transformButton.addEventListener('click', () => {
+                toast.classList.add('toast--visible');
+
+                if (toast.timeoutId) {
+                    clearTimeout(toast.timeoutId);
+                }
+
+                toast.timeoutId = setTimeout(() => {
+                    toast.classList.remove('toast--visible');
+                }, 2200);
+            });
+        })();
     </script>
-   
 
+        <script>
+        // Только UI: сценарий «Удалить страницу?» — мем, затем интерфейс осыпается песком:
+        // сверху вниз, по глубине (параллакс z у каждой песчинки), с плавным ветром.
+        // Логика преобразования целиком в script.js и не изменялась.
+        (function () {
+            const LINK = document.getElementById('nukeLink');
+            const POP = document.getElementById('nukePop');
+            const YES = document.getElementById('nukeYes');
+            const NO = document.getElementById('nukeNo');
+            const CAT = document.getElementById('nukeCat');
+            const CANVAS = document.getElementById('nukeCanvas');
+            const ctx = CANVAS.getContext('2d');
 
-</body>
+            // Независимые «куски» интерфейса — каждый осыпается отдельно.
+            const TARGETS = [
+                '.topbar', '.rail-title', '.switch-row',
+                '.pane', '.transform-bar', '.statusline',
+                '.mascot-button', '.nuke-link', '.oracle-popup'
+            ].join(', ');
+
+            let running = false;
+
+            function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+            LINK.addEventListener('click', function (e) {
+                e.stopPropagation();
+                POP.classList.toggle('open');
+            });
+
+            document.addEventListener('mousedown', function (e) {
+                if (POP.classList.contains('open') && !POP.contains(e.target) && !LINK.contains(e.target)) {
+                    POP.classList.remove('open');
+                }
+            });
+
+            NO.addEventListener('click', function () { POP.classList.remove('open'); });
+
+            YES.addEventListener('click', async function () {
+                if (running) return;
+                running = true;
+                POP.classList.remove('open');
+
+                // Мем по центру: появился → подержался → медленно растаял
+                CAT.classList.add('show');
+                await wait(1800);
+                CAT.classList.add('fade');
+                await wait(1200);
+                CAT.classList.remove('show', 'fade');
+
+                try {
+                    if (!window.html2canvas) {
+                        await fadeEverything();
+                        return;
+                    }
+                    await destroy(TARGETS, false);   // содержимое: сверху вниз
+                    await destroy('.frame', true);   // затем пустой каркас, сжато
+                } catch (err) {
+                    console.error('nuke failed', err);
+                    await fadeEverything();
+                }
+            });
+
+            async function fadeEverything() {
+                document.querySelectorAll(TARGETS + ', .frame').forEach(function (el) {
+                    el.style.transition = 'opacity 1200ms ease';
+                    el.style.opacity = '0';
+                    el.style.visibility = 'hidden';
+                });
+            }
+
+            async function destroy(sel, compressed) {
+                window.scrollTo(0, 0);
+
+                // html2canvas не видит содержимое textarea — подменяем его дивами-клонами
+                const cleanup = [];
+
+                document.querySelectorAll('textarea').forEach(function (ta) {
+                    if (getComputedStyle(ta).visibility === 'hidden') return;
+                    const r = ta.getBoundingClientRect();
+                    const cs = getComputedStyle(ta);
+                    const d = document.createElement('div');
+                    d.textContent = ta.value;
+                    d.style.cssText = 'position:absolute;z-index:9999;background:transparent;white-space:pre-wrap;overflow:hidden;'
+                        + 'left:' + (r.left + window.scrollX) + 'px;top:' + (r.top + window.scrollY) + 'px;'
+                        + 'width:' + ta.clientWidth + 'px;height:' + ta.clientHeight + 'px;'
+                        + 'font-family:' + cs.fontFamily + ';font-size:' + cs.fontSize + ';font-weight:' + cs.fontWeight + ';'
+                        + 'line-height:' + cs.lineHeight + ';padding:' + cs.padding + ';color:' + cs.color + ';';
+                    document.body.appendChild(d);
+                    cleanup.push(function () { d.remove(); });
+                });
+
+                // html2canvas в свежих Chrome спотыкается о computed-стили форм-контролов
+                // и inline-SVG — на время снимка подменяем их простыми блоками/картинками.
+                document.querySelectorAll('input').forEach(function (inp) {
+                    if (getComputedStyle(inp).visibility === 'hidden') return;
+                    const r = inp.getBoundingClientRect();
+                    if (!r.width || !r.height) return;
+                    const cs = getComputedStyle(inp);
+                    const knob = Math.max(8, r.height - 4);
+                    const holder = document.createElement('div');
+                    holder.style.cssText = 'position:absolute;z-index:9999;border-radius:999px;background:' + cs.backgroundColor
+                        + ';left:' + (r.left + window.scrollX) + 'px;top:' + (r.top + window.scrollY) + 'px;'
+                        + 'width:' + r.width + 'px;height:' + r.height + 'px;';
+                    const k = document.createElement('div');
+                    k.style.cssText = 'position:absolute;top:2px;left:' + (inp.checked ? (r.width - knob - 2) : 2) + 'px;'
+                        + 'width:' + knob + 'px;height:' + knob + 'px;border-radius:50%;background:' + (cs.getPropertyValue('--surface').trim() || '#FFFFFF') + ';';
+                    holder.appendChild(k);
+                    const prevV = inp.style.visibility;
+                    inp.style.visibility = 'hidden';
+                    document.body.appendChild(holder);
+                    cleanup.push(function () { holder.remove(); inp.style.visibility = prevV; });
+                });
+
+                document.querySelectorAll('svg').forEach(function (sv) {
+                    const r = sv.getBoundingClientRect();
+                    if (!r.width || !r.height) return;
+                    try {
+                        const clone = sv.cloneNode(true);
+                        clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                        clone.setAttribute('style', 'color:' + getComputedStyle(sv.parentElement).color + ';');
+                        const img = document.createElement('img');
+                        img.style.cssText = 'position:absolute;z-index:9999;left:' + (r.left + window.scrollX) + 'px;top:' + (r.top + window.scrollY) + 'px;width:' + r.width + 'px;height:' + r.height + 'px;';
+                        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+                        const prevV = sv.style.visibility;
+                        sv.style.visibility = 'hidden';
+                        document.body.appendChild(img);
+                        cleanup.push(function () { img.remove(); sv.style.visibility = prevV; });
+                    } catch (e) { /* не критично для эффекта */ }
+                });
+
+                const shot = await html2canvas(document.body, {
+                    backgroundColor: null,
+                    scale: 1,
+                    logging: false
+                });
+                cleanup.forEach(function (fn) { fn(); });
+
+                // Куски: вырезаем каждый элемент из общего снимка по его прямоугольнику.
+                // Порядок осыпания — сверху вниз по странице; крупные «фоновые» куски
+                // (большая площадь) начинают чуть раньше мелких виджетов — это и есть глубина.
+                const docH = Math.max(document.documentElement.scrollHeight, 1);
+                const units = [];
+                [...new Set(document.querySelectorAll(sel || TARGETS))].forEach(function (el) {
+                    const cs = getComputedStyle(el);
+                    if (cs.visibility === 'hidden' || cs.display === 'none') return;
+                    const r = el.getBoundingClientRect();
+                    const w = Math.round(r.width), h = Math.round(r.height);
+                    if (w < 6 || h < 6) return;
+                    const c = document.createElement('canvas');
+                    c.width = w; c.height = h;
+                    c.getContext('2d', { willReadFrequently: true }).drawImage(
+                        shot,
+                        Math.round(r.left + window.scrollX), Math.round(r.top + window.scrollY), w, h,
+                        0, 0, w, h
+                    );
+                    const area = (r.width * r.height) / (1440 * 300);
+                    units.push({
+                        el: el,
+                        x: r.left, y: r.top, w: w, h: h, c: c,
+                        depth: Math.min(1, area),
+                        startBase: (compressed ? 250 : 700) + (r.top / docH) * (compressed ? 2600 : 6800) - Math.min(1, area) * 450,
+                        sweep: Math.min(compressed ? 1400 : 1900, Math.max(650, h * 4.2)),
+                        hidden: false, hideAt: 0
+                    });
+                });
+                units.sort(function (a, b) { return a.startBase - b.startBase; });
+
+                // Песчинки: растр каждого куска режется на квадратики 3×3
+                let parts = [];
+                const STEP = 3;
+                for (const u of units) {
+                    const data = u.c.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, u.w, u.h).data;
+                    for (let y = 0; y < u.h; y += STEP) {
+                        const rowT = y / u.h;
+                        for (let x = 0; x < u.w; x += STEP) {
+                            const i = (y * u.w + x) * 4;
+                            if (data[i + 3] < 24) continue;
+                            const z = 0.7 + Math.random() * 0.6; // «глубина» песчинки
+                            parts.push({
+                                x: u.x + x + Math.random() * 1.4,
+                                y: u.y + y + Math.random() * 1.4,
+                                s: STEP * (0.7 + z * 0.4),
+                                col: 'rgb(' + data[i] + ',' + data[i + 1] + ',' + data[i + 2] + ')',
+                                vx: (Math.random() - 0.5) * 16,
+                                vy: -10 + Math.random() * 26,
+                                gr: 560 * z + Math.random() * 170,
+                                drift: (Math.random() - 0.5) * 60,
+                                start: u.startBase + rowT * u.sweep + Math.random() * 110,
+                                life: (1.2 + Math.random() * 1.15) * (2 - z * 0.55),
+                                a: 1,
+                                dead: false
+                            });
+                        }
+                    }
+                    u.hideAt = u.startBase + u.sweep * 0.7;
+                }
+
+                // Прореживание для слабых машин: не больше ~52 тыс. песчинок
+                if (parts.length > 52000) {
+                    const every = Math.ceil(parts.length / 52000);
+                    parts = parts.filter(function (_, i) { return i % every === 0; });
+                }
+
+                // Группировка по цвету: меньше переключений fillStyle — плавнее кадр
+                parts.sort(function (a, b) { return a.col < b.col ? -1 : a.col > b.col ? 1 : 0; });
+
+                CANVAS.width = window.innerWidth;
+                CANVAS.height = window.innerHeight;
+                CANVAS.style.display = 'block';
+
+                const t0 = performance.now();
+                let lastNow = t0;
+                let done = function () {};
+
+                function frame(now) {
+                    const k = Math.min(3, (now - lastNow) / 16.7 || 1);
+                    lastNow = now;
+                    const t = now - t0;
+                    const dt = (k * 16.7) / 1000;                 // длительность кадра в секундах
+                    const wind = Math.sin(t / 1400) * 9;          // лёгкий качающийся ветер
+
+                    ctx.clearRect(0, 0, CANVAS.width, CANVAS.height);
+                    let alive = 0;
+                    let lastCol = '';
+
+                    for (let n = 0; n < parts.length; n++) {
+                        const p = parts[n];
+                        if (p.dead) continue;
+                        const lt = t - p.start;
+                        if (lt < 0) { alive++; continue; }
+                        const lifeT = lt / (p.life * 1000);
+                        if (lifeT >= 1 || p.y > CANVAS.height + 20) { p.dead = true; continue; }
+                        alive++;
+
+                        p.vy += p.gr * dt;
+                        p.vx += ((wind + p.drift) - p.vx) * Math.min(1, dt * 0.9);
+                        p.x += p.vx * dt;
+                        p.y += p.vy * dt;
+
+                        const fade = 1 - lifeT;
+                        ctx.globalAlpha = Math.min(1, fade * 1.5);
+                        if (p.col !== lastCol) { ctx.fillStyle = p.col; lastCol = p.col; }
+                        const sz = p.s * (0.45 + 0.55 * fade);
+                        ctx.fillRect(p.x, p.y, sz, sz);
+                    }
+                    ctx.globalAlpha = 1;
+
+                    // Реальный элемент тает, когда фронт крошения прошёл по нему
+                    for (const u of units) {
+                        if (!u.hidden && t >= u.hideAt) {
+                            u.hidden = true;
+                            u.el.style.transition = 'opacity 320ms ease';
+                            u.el.style.opacity = '0';
+                            setTimeout(function () { u.el.style.visibility = 'hidden'; }, 340);
+                        }
+                    }
+
+                    if (alive > 0) requestAnimationFrame(frame);
+                    else { CANVAS.style.display = 'none'; done(); }
+                }
+                return new Promise(function (res) { done = res; requestAnimationFrame(frame); });
+            }
+        })();
+    </script>
+    </body>
 
 </html>
-
-<!-- --eerie-black: #1c2321ff;
---cadet-gray: #7d98a1ff;
---paynes-gray: #5e6572ff;
---powder-blue: #a9b4c2ff;
---antiflash-white: #eef1efff; -->
